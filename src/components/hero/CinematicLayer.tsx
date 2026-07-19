@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import styles from "./CinematicLayer.module.css";
 
 type Particle = {
   baseX: number;
@@ -225,7 +224,12 @@ export default function CinematicLayer({ className }: { className?: string }) {
   return (
     <div
       ref={containerRef}
-      className={[styles.canvasHost, className].filter(Boolean).join(" ")}
+      className={[
+        "absolute inset-0 z-[3] pointer-events-none mix-blend-screen [&>canvas]:block [&>canvas]:h-full [&>canvas]:w-full",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       aria-hidden="true"
     />
   );

@@ -8,7 +8,6 @@ import PlaybackControls from "./PlaybackControls";
 import SoundHint from "./SoundHint";
 import ScrollIndicator from "./ScrollIndicator";
 import { heroContent } from "@/lib/heroContent";
-import styles from "./VideoIntro.module.css";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -37,11 +36,11 @@ export default function VideoIntro() {
     const media = mediaRef.current;
     if (!section || !content || !media) return;
 
-    const tagline = content.querySelector(`.${styles.tagline}`);
-    const nameLines = content.querySelectorAll(`.${styles.nameLine}`);
-    const role = content.querySelector(`.${styles.role}`);
-    const description = content.querySelector(`.${styles.description}`);
-    const chrome = section.querySelectorAll(`.${styles.chromeItem}`);
+    const tagline = content.querySelector("[data-hero-tagline]");
+    const nameLines = content.querySelectorAll("[data-hero-name-line]");
+    const role = content.querySelector("[data-hero-role]");
+    const description = content.querySelector("[data-hero-description]");
+    const chrome = section.querySelectorAll("[data-hero-chrome]");
 
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
@@ -152,11 +151,17 @@ export default function VideoIntro() {
   }
 
   return (
-    <section ref={sectionRef} className={styles.hero}>
-      <div ref={mediaRef} className={styles.mediaLayer}>
+    <section
+      ref={sectionRef}
+      className="sticky top-0 z-0 isolate h-screen min-h-[560px] w-full overflow-hidden bg-void"
+    >
+      <div
+        ref={mediaRef}
+        className="absolute inset-0 z-0 grid place-items-center will-change-transform"
+      >
         <video
           ref={bgVideoRef}
-          className={styles.bgVideo}
+          className="absolute inset-0 z-0 h-full w-full scale-[1.22] object-cover blur-[52px] saturate-[1.35] brightness-[0.62]"
           src={heroContent.videoSrc}
           muted
           loop
@@ -165,12 +170,12 @@ export default function VideoIntro() {
           preload="auto"
           aria-hidden="true"
         />
-        <div className={styles.bgTint} />
+        <div className="absolute inset-0 z-[1] mix-blend-soft-light bg-[radial-gradient(60%_55%_at_30%_30%,rgba(255,122,60,0.22),transparent_70%),radial-gradient(55%_60%_at_78%_75%,rgba(79,184,255,0.16),transparent_70%)]" />
 
-        <div className={styles.fgFrame}>
+        <div className="relative z-[2] h-screen w-screen overflow-hidden rounded-none border-0 min-[721px]:h-[min(84vh,940px)] min-[721px]:w-[min(94vw,1560px)] min-[721px]:rounded-[clamp(14px,2vw,28px)] min-[721px]:border min-[721px]:border-white/[0.09] min-[721px]:shadow-[0_30px_90px_-20px_rgba(0,0,0,0.65),0_0_120px_-30px_rgba(255,130,70,0.35)]">
           <video
             ref={fgVideoRef}
-            className={styles.fgVideo}
+            className="block h-full w-full object-cover"
             src={heroContent.videoSrc}
             muted={isMuted}
             loop
@@ -178,30 +183,61 @@ export default function VideoIntro() {
             playsInline
             preload="auto"
           />
-          <div className={styles.frameSheen} />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0)_18%,rgba(0,0,0,0)_55%,rgba(0,0,0,0.28)_100%)]" />
         </div>
       </div>
 
-      <CinematicLayer className={styles.particles} />
+      <CinematicLayer />
 
-      <div className={styles.vignette} />
-      <div className={styles.overlayTop} />
-      <div className={styles.overlayBottom} />
-      <div className={styles.grain} />
+      <div className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(120%_90%_at_50%_45%,transparent_45%,rgba(2,3,6,0.55)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-[22%] bg-[linear-gradient(to_bottom,rgba(2,3,6,0.55),transparent)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-[52%] bg-[linear-gradient(to_top,rgba(2,3,6,0.86),transparent)]" />
+      <div className="pointer-events-none absolute inset-0 z-[4] opacity-[0.05] mix-blend-overlay bg-[image:var(--grain-url)]" />
 
-      <div ref={contentRef} className={styles.content}>
-        <p className={styles.tagline}>{heroContent.tagline}</p>
-        <h1 className={styles.name} aria-label={`${heroContent.firstName} ${heroContent.lastName}`.trim()}>
-          <span className={styles.nameLine}>{heroContent.firstName}</span>
+      <div
+        ref={contentRef}
+        className="absolute z-[5] max-w-[min(90vw,720px)] will-change-[transform,opacity] left-[clamp(1.5rem,6vw,6rem)] bottom-[clamp(6.5rem,14vh,9rem)] max-[720px]:left-[1.25rem] max-[720px]:right-[1.25rem] max-[720px]:bottom-[6.5rem] max-[720px]:max-w-none"
+      >
+        <p
+          data-hero-tagline
+          className="mb-[clamp(0.75rem,2vw,1.25rem)] text-[0.78rem] font-semibold uppercase tracking-[0.32em] text-accent-orange-soft"
+        >
+          {heroContent.tagline}
+        </p>
+        <h1
+          className="mb-[clamp(1rem,2.4vw,1.5rem)] flex flex-col text-[clamp(3.2rem,11vw,8.5rem)] font-extrabold leading-[0.92] tracking-[-0.02em] text-[#f5f2ec] [text-shadow:0_12px_60px_rgba(0,0,0,0.45)]"
+          aria-label={`${heroContent.firstName} ${heroContent.lastName}`.trim()}
+        >
+          <span
+            data-hero-name-line
+            className="block animate-sheen bg-[linear-gradient(100deg,#ffffff_0%,#ffe9d6_45%,#ffb37a_75%,#ffffff_100%)] bg-clip-text text-transparent [background-size:220%_100%] motion-reduce:animate-none motion-reduce:bg-none motion-reduce:text-[#f5f2ec]"
+          >
+            {heroContent.firstName}
+          </span>
           {hasLastName && (
-            <span className={styles.nameLine}>{heroContent.lastName}</span>
+            <span
+              data-hero-name-line
+              className="block animate-sheen bg-[linear-gradient(100deg,#ffffff_0%,#ffe9d6_45%,#ffb37a_75%,#ffffff_100%)] bg-clip-text text-transparent [background-size:220%_100%] motion-reduce:animate-none motion-reduce:bg-none motion-reduce:text-[#f5f2ec]"
+            >
+              {heroContent.lastName}
+            </span>
           )}
         </h1>
-        <p className={styles.role}>{heroContent.role}</p>
-        <p className={styles.description}>{heroContent.description}</p>
+        <p
+          data-hero-role
+          className="mb-[0.6rem] text-[clamp(1rem,1.6vw,1.3rem)] font-medium text-white/[0.92]"
+        >
+          {heroContent.role}
+        </p>
+        <p
+          data-hero-description
+          className="max-w-[46ch] text-[clamp(0.9rem,1.1vw,1.05rem)] leading-[1.6] text-[#e2e2e8]/[0.72]"
+        >
+          {heroContent.description}
+        </p>
       </div>
 
-      <div className={styles.chromeItem}>
+      <div data-hero-chrome>
         <PlaybackControls
           isPlaying={isPlaying}
           isMuted={isMuted}
@@ -210,11 +246,11 @@ export default function VideoIntro() {
         />
       </div>
 
-      <div className={styles.chromeItem}>
+      <div data-hero-chrome>
         <SoundHint visible={showSoundHint && isMuted} onClick={toggleMute} />
       </div>
 
-      <div className={styles.chromeItem}>
+      <div data-hero-chrome>
         <ScrollIndicator targetId={heroContent.scrollTargetId} />
       </div>
     </section>
