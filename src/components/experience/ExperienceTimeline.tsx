@@ -1,0 +1,146 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  experienceContent,
+  formatDuration,
+  formatMonthYear,
+} from "@/lib/experienceContent";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
+export default function ExperienceTimeline() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const items = container.querySelectorAll("[data-timeline-item]");
+    const rail = container.querySelector("[data-timeline-rail]");
+    const tweens: gsap.core.Tween[] = [];
+
+    items.forEach((item, index) => {
+      const fromX = index % 2 === 0 ? -24 : 24;
+      const tween = gsap.fromTo(
+        item,
+        { opacity: 0, y: 32, x: fromX },
+        {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+      tweens.push(tween);
+    });
+
+    let railTween: gsap.core.Tween | undefined;
+    if (rail) {
+      railTween = gsap.fromTo(
+        rail,
+        { scaleY: 0, transformOrigin: "top" },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top 75%",
+            end: "bottom 60%",
+            scrub: true,
+          },
+        }
+      );
+    }
+
+    return () => {
+      tweens.forEach((tween) => tween.scrollTrigger?.kill());
+      tweens.forEach((tween) => tween.kill());
+      railTween?.scrollTrigger?.kill();
+      railTween?.kill();
+    };
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative mx-auto w-full max-w-5xl">
+      <div
+        data-timeline-rail
+        className="pointer-events-none absolute left-[18px] top-0 h-full w-px bg-[linear-gradient(to_bottom,rgba(255,179,122,0.4),rgba(255,255,255,0.15),transparent)] lg:left-1/2"
+        aria-hidden="true"
+      />
+
+      <ol className="flex flex-col gap-12 lg:gap-16">
+        {experienceContent.map((entry, index) => {
+          const isRight = index % 2 === 1;
+          return (
+            <li key={`${entry.company}-${entry.start}`} data-timeline-item className="relative pl-12 lg:pl-0">
+              <span
+                className="absolute left-[18px] top-1 z-10 inline-flex h-8 min-w-8 max-w-[3.75rem] -translate-x-1/2 items-center justify-center whitespace-nowrap rounded-full border border-glass-border bg-ink px-1.5 text-[0.62rem] font-semibold uppercase tracking-wide text-accent-orange-soft shadow-[0_0_0_4px_var(--color-ink),0_0_20px_rgba(255,122,60,0.25)] lg:left-1/2 lg:h-10 lg:min-w-10 lg:px-2 lg:text-[0.7rem]"
+              >
+                {formatDuration(entry.start, entry.end)}
+              </span>
+
+              <div
+                className={
+                  "rounded-2xl border border-glass-border bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-xl lg:w-[calc(50%-2.75rem)] lg:p-6 " +
+                  (isRight ? "lg:ml-[calc(50%+2.75rem)]" : "")
+                }
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-accent-orange),var(--color-accent-orange-soft))] text-sm font-bold text-ink">
+                    {initials(entry.company)}
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="truncate text-base font-semibold text-[#f5f2ec] lg:text-lg">
+                      {entry.company}
+                    </h3>
+                    <p className="truncate text-sm text-white/70">{entry.role}</p>
+                  </div>
+                </div>
+
+                <p className="mt-2 text-xs text-white/50">
+                  {formatMonthYear(entry.start)} — {formatMonthYear(entry.end)}
+                </p>
+
+                <p className="mt-4 text-[0.9rem] leading-relaxed text-white/70">
+                  {entry.description}
+                </p>
+
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {entry.skills.map((skill) => (
+                    <li
+                      key={skill}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] text-white/65"
+                    >
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}

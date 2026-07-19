@@ -7,5 +7,5 @@ export const heroContent = {
   description:
     "I build cinematic, high-performance web experiences at the intersection of design, motion, and code.",
   videoSrc: "/videos/hero-video.mp4",
-  scrollTargetId: "work",
+  scrollTargetId: "experience",
 };
