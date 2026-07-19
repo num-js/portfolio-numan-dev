@@ -41,6 +41,7 @@ GSAP is the motion engine everywhere (no Framer Motion / `motion` in this projec
 - **Pill badge:** `rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] text-white/65` — tech/skill tags.
 - **Section header:** small uppercase orange tagline + bold heading + one supporting sentence, centered, `mb-16 lg:mb-20` above the section body. Used identically by the Experience section; reuse rather than reinvent per-section.
 - **Section stacking:** each content section below the hero is an `id`-anchored `<section>` with `bg-ink`, `rounded-t-[clamp(20px,3vw,40px)]`, and a large negative-offset box-shadow (`shadow-[0_-60px_120px_-40px_rgba(0,0,0,0.7)]`) so it visually "rises" over the sticky hero as the user scrolls.
+- **Floating overlap card (Projects gallery):** a full-width screenshot with a smaller `accent-orange-soft`-bordered glass card overlapping one of its bottom corners (alternating left/right per project). On mobile the card stacks below the image in normal flow (`relative`, `-mt-8` overlap); from `sm:` up it switches to `absolute` corner positioning (`sm:w-[300px] lg:w-[320px]`). Keep those breakpoint-specific layout modes — collapsing them into a single strategy was the root cause of a previous layout bug.
 
 ## Layout
 

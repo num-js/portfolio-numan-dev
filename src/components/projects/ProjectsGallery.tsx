@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,33 +11,11 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const TILT_MAX_DEG = 6;
-
 export default function ProjectsGallery() {
   const stageRef = useRef<HTMLDivElement>(null);
-  const [enableTilt, setEnableTilt] = useState(false);
 
-  // Gate the pointer-tilt on the screenshots — direct-response interaction
-  // only, for hover-capable, motion-comfortable visitors.
-  useEffect(() => {
-    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const pointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-    const update = () => {
-      setEnableTilt(!motionQuery.matches && pointerQuery.matches);
-    };
-    update();
-
-    motionQuery.addEventListener("change", update);
-    pointerQuery.addEventListener("change", update);
-    return () => {
-      motionQuery.removeEventListener("change", update);
-      pointerQuery.removeEventListener("change", update);
-    };
-  }, []);
-
-  // Per-row entrance: the screenshot wipes into view while its copy
-  // staggers in from the side it's anchored to.
+  // Per-row entrance: the screenshot wipes into view while its floating
+  // card slides in from the corner it overlaps, staggering its own content.
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
@@ -52,12 +30,13 @@ export default function ProjectsGallery() {
     const timelines: gsap.core.Timeline[] = [];
 
     rows.forEach((row) => {
-      const isLeftImage = row.dataset.imageSide === "left";
+      const isRight = row.dataset.cardSide === "right";
       const frame = row.querySelector<HTMLElement>("[data-project-frame]");
       const clip = row.querySelector<HTMLElement>("[data-project-clip]");
-      const revealEls = Array.from(
-        row.querySelectorAll<HTMLElement>("[data-reveal]")
-      );
+      const card = row.querySelector<HTMLElement>("[data-project-card]");
+      const revealEls = card
+        ? Array.from(card.querySelectorAll<HTMLElement>("[data-reveal]"))
+        : [];
       if (!frame) return;
 
       const tl = gsap.timeline({
@@ -69,7 +48,10 @@ export default function ProjectsGallery() {
       });
 
       if (prefersReducedMotion) {
-        tl.from([frame, ...revealEls], { opacity: 0, duration: 0.5 });
+        tl.from([frame, card, ...revealEls].filter(Boolean), {
+          opacity: 0,
+          duration: 0.5,
+        });
       } else {
         tl.fromTo(
           frame,
@@ -86,13 +68,21 @@ export default function ProjectsGallery() {
           );
         }
 
-        const textFrom = isLeftImage ? 32 : -32;
+        if (card) {
+          tl.fromTo(
+            card,
+            { opacity: 0, y: 24, x: isRight ? 28 : -28 },
+            { opacity: 1, y: 0, x: 0, duration: 0.8, ease: "power3.out" },
+            "-=0.55"
+          );
+        }
+
         revealEls.forEach((el, i) => {
           tl.fromTo(
             el,
-            { opacity: 0, x: textFrom },
-            { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" },
-            i === 0 ? "-=0.65" : "-=0.5"
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
+            i === 0 ? "-=0.35" : "-=0.3"
           );
         });
       }
@@ -108,126 +98,49 @@ export default function ProjectsGallery() {
     };
   }, []);
 
-  // Subtle 3D tilt + lift on the screenshot itself, following the cursor.
-  useEffect(() => {
-    if (!enableTilt) return;
-    const stage = stageRef.current;
-    if (!stage) return;
-
-    const frames = Array.from(
-      stage.querySelectorAll<HTMLElement>("[data-project-frame]")
-    );
-    const cleanups: (() => void)[] = [];
-
-    frames.forEach((frame) => {
-      // Seed GSAP's transform cache with these exact properties up front —
-      // otherwise quickTo has to decompose the CSS matrix left by the
-      // entrance tween's `y`, which it can't always do cleanly for 3D
-      // rotation and warns "not eligible for reset".
-      gsap.set(frame, { rotationX: 0, rotationY: 0, scale: 1 });
-
-      const setRotateX = gsap.quickTo(frame, "rotateX", {
-        duration: 0.6,
-        ease: "power3.out",
-      });
-      const setRotateY = gsap.quickTo(frame, "rotateY", {
-        duration: 0.6,
-        ease: "power3.out",
-      });
-      const setScale = gsap.quickTo(frame, "scale", {
-        duration: 0.6,
-        ease: "power3.out",
-      });
-
-      const handleMove = (event: PointerEvent) => {
-        const rect = frame.getBoundingClientRect();
-        const px = (event.clientX - rect.left) / rect.width;
-        const py = (event.clientY - rect.top) / rect.height;
-        setRotateX((0.5 - py) * TILT_MAX_DEG);
-        setRotateY((px - 0.5) * TILT_MAX_DEG);
-        setScale(1.03);
-      };
-
-      const handleLeave = () => {
-        setRotateX(0);
-        setRotateY(0);
-        setScale(1);
-      };
-
-      frame.addEventListener("pointermove", handleMove);
-      frame.addEventListener("pointerleave", handleLeave);
-      cleanups.push(() => {
-        frame.removeEventListener("pointermove", handleMove);
-        frame.removeEventListener("pointerleave", handleLeave);
-      });
-    });
-
-    return () => cleanups.forEach((fn) => fn());
-  }, [enableTilt]);
-
   return (
-    <div
-      ref={stageRef}
-      className="mx-auto flex w-full max-w-6xl flex-col gap-20 lg:gap-28"
-    >
+    <div ref={stageRef} className="mx-auto flex w-full max-w-5xl flex-col gap-12 sm:gap-28">
       {projectsContent.map((project, index) => {
-        const isLeftImage = index % 2 === 0;
-        const accentText = isLeftImage ? "text-accent-orange-soft" : "text-accent-blue";
-        const accentGlow = isLeftImage ? "bg-accent-orange/25" : "bg-accent-blue/20";
-        const accentDot = isLeftImage ? "bg-accent-orange" : "bg-accent-blue";
-        const accentBorder = isLeftImage
-          ? "hover:border-accent-orange/30"
-          : "hover:border-accent-blue/30";
+        const isRight = index % 2 === 0;
 
         return (
           <div
             key={project.id}
             data-project-row
-            data-image-side={isLeftImage ? "left" : "right"}
-            className={
-              "flex flex-col gap-8 lg:items-center lg:gap-16 " +
-              (isLeftImage ? "lg:flex-row" : "lg:flex-row-reverse")
-            }
+            data-card-side={isRight ? "right" : "left"}
+            className="relative"
           >
-            <div className="relative w-full perspective-[1000px] lg:w-[58%]">
-              <div
-                aria-hidden="true"
-                className={`pointer-events-none absolute -z-10 h-40 w-40 rounded-full opacity-50 blur-3xl lg:h-64 lg:w-64 lg:blur-[90px] ${accentGlow} ${
-                  isLeftImage ? "-bottom-8 -left-8" : "-bottom-8 -right-8"
-                }`}
-              />
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noreferrer"
+              data-project-frame
+              aria-label={`Open live demo of ${project.name}`}
+              className="group relative block aspect-video w-full overflow-hidden rounded-2xl border border-white/10 shadow-[0_40px_90px_-40px_rgba(0,0,0,0.75)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-orange-soft"
+            >
+              <div data-project-clip className="absolute inset-0">
+                <Image
+                  src={project.image}
+                  alt={`${project.name} screenshot`}
+                  fill
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  priority={index === 0}
+                  className="object-cover transition-transform duration-700 ease-cinematic group-hover:scale-[1.04]"
+                />
+              </div>
+            </a>
 
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noreferrer"
-                data-project-frame
-                aria-label={`Open live demo of ${project.name}`}
-                className={`group relative block aspect-video overflow-hidden rounded-2xl border border-white/10 shadow-[0_40px_90px_-40px_rgba(0,0,0,0.75)] transition-colors duration-500 will-change-transform focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-orange-soft ${accentBorder}`}
-              >
-                <div data-project-clip className="absolute inset-0">
-                  <Image
-                    src={project.image}
-                    alt={`${project.name} screenshot`}
-                    fill
-                    sizes="(min-width: 1024px) 60vw, 100vw"
-                    priority={index === 0}
-                    className="object-cover transition-transform duration-700 ease-cinematic group-hover:scale-[1.04]"
-                  />
-                </div>
-
-                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 backdrop-blur-sm">
-                  <span className={`h-1.5 w-1.5 rounded-full animate-pulse-dot ${accentDot}`} />
-                  <span className="text-[0.65rem] font-medium uppercase tracking-wide text-white/85">
-                    Live
-                  </span>
-                </div>
-              </a>
-            </div>
-
-            <div className="w-full lg:w-[42%]">
+            <div
+              data-project-card
+              className={
+                "relative z-10 -mt-8 mx-3 rounded-2xl border border-accent-orange-soft/40 bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6),0_0_45px_-14px_rgba(255,122,60,0.3)] backdrop-blur-xl transition-transform duration-500 will-change-transform hover:-translate-y-1 sm:absolute sm:mx-0 sm:mt-0 sm:-bottom-10 sm:w-[300px] lg:w-[320px] " +
+                (isRight
+                  ? "sm:left-auto sm:right-6 lg:right-10"
+                  : "sm:right-auto sm:left-6 lg:left-10")
+              }
+            >
               <div data-reveal className="mb-3 flex items-start justify-between gap-3">
-                <h3 className={`text-2xl font-bold tracking-tight ${accentText}`}>
+                <h3 className="text-xl font-bold tracking-tight text-accent-orange-soft">
                   {project.name}
                 </h3>
                 {project.repoUrl && (
@@ -244,18 +157,20 @@ export default function ProjectsGallery() {
                 )}
               </div>
 
-              <p
-                data-reveal
-                className="mb-5 max-w-[46ch] text-[0.95rem] leading-relaxed text-white/70"
-              >
+              <span
+                aria-hidden="true"
+                className="mb-4 block h-px w-full bg-linear-to-r from-accent-orange-soft/60 to-transparent"
+              />
+
+              <p data-reveal className="mb-4 text-[0.85rem] leading-relaxed text-white/70">
                 {project.description}
               </p>
 
-              <ul data-reveal className="mb-6 flex flex-wrap gap-2">
+              <ul data-reveal className="mb-5 flex flex-wrap gap-1.5">
                 {project.tech.map((tech) => (
                   <li
                     key={tech}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] text-white/65"
+                    className="rounded-full border border-accent-orange-soft/35 bg-white/5 px-2.5 py-1 text-[0.65rem] text-white/65"
                   >
                     {tech}
                   </li>
@@ -267,7 +182,7 @@ export default function ProjectsGallery() {
                 target="_blank"
                 rel="noreferrer"
                 data-reveal
-                className="group/cta inline-flex items-center gap-1.5 self-start rounded-full border border-accent-orange/40 bg-accent-orange/10 px-4 py-2 text-sm font-medium text-accent-orange-soft transition-colors duration-300 hover:bg-accent-orange/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
+                className="group/cta inline-flex items-center gap-1.5 self-start rounded-full border border-accent-orange-soft/50 px-4 py-2 text-sm font-medium text-accent-orange-soft transition-colors duration-300 hover:bg-accent-orange/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
               >
                 View Demo
                 <svg
