@@ -1,5 +1,6 @@
 import VideoIntro from "@/components/hero/VideoIntro";
 import ExperienceTimeline from "@/components/experience/ExperienceTimeline";
+import ProjectsGallery from "@/components/projects/ProjectsGallery";
 import SkillsConstellation from "@/components/skills/SkillsConstellation";
 
 export default function Home() {
@@ -45,6 +46,26 @@ export default function Home() {
         </div>
 
         <SkillsConstellation />
+      </section>
+
+      <section
+        id="projects"
+        className="relative z-[1] border-t border-white/6 bg-ink px-[clamp(1.25rem,6vw,6rem)] py-[clamp(4rem,12vh,7rem)]"
+      >
+        <div className="mx-auto mb-16 max-w-[760px] text-center lg:mb-20">
+          <p className="mb-5 text-[0.75rem] font-semibold uppercase tracking-[0.28em] text-accent-orange-soft">
+            Selected Work
+          </p>
+          <h2 className="mb-5 text-[clamp(1.8rem,4.5vw,3rem)] font-bold leading-[1.15] tracking-[-0.01em] text-[#f5f2ec]">
+            Projects
+          </h2>
+          <p className="text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.7] text-mist/70">
+            A few things I&apos;ve shipped recently — real products, live in
+            the wild, built end to end.
+          </p>
+        </div>
+
+        <ProjectsGallery />
       </section>
     </main>
   );
