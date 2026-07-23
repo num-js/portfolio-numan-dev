@@ -29,29 +29,57 @@ export default function ExperienceTimeline() {
     const container = containerRef.current;
     if (!container) return;
 
-    const items = container.querySelectorAll("[data-timeline-item]");
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const items = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-timeline-item]")
+    );
     const rail = container.querySelector("[data-timeline-rail]");
-    const tweens: gsap.core.Tween[] = [];
+    const timelines: gsap.core.Timeline[] = [];
 
     items.forEach((item, index) => {
       const fromX = index % 2 === 0 ? -24 : 24;
-      const tween = gsap.fromTo(
-        item,
-        { opacity: 0, y: 32, x: fromX },
-        {
-          opacity: 1,
-          y: 0,
-          x: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-        }
+      const bullets = Array.from(
+        item.querySelectorAll<HTMLElement>("[data-experience-bullet]")
       );
-      tweens.push(tween);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: item,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      if (prefersReducedMotion) {
+        tl.from([item, ...bullets], { opacity: 0, duration: 0.4 });
+      } else {
+        tl.fromTo(
+          item,
+          { opacity: 0, y: 32, x: fromX },
+          { opacity: 1, y: 0, x: 0, duration: 0.9, ease: "power3.out" }
+        );
+
+        if (bullets.length > 0) {
+          tl.fromTo(
+            bullets,
+            { opacity: 0, y: 12, x: -8 },
+            {
+              opacity: 1,
+              y: 0,
+              x: 0,
+              duration: 0.5,
+              ease: "power3.out",
+              stagger: 0.08,
+            },
+            "-=0.35"
+          );
+        }
+      }
+
+      timelines.push(tl);
     });
 
     let railTween: gsap.core.Tween | undefined;
@@ -73,8 +101,10 @@ export default function ExperienceTimeline() {
     }
 
     return () => {
-      tweens.forEach((tween) => tween.scrollTrigger?.kill());
-      tweens.forEach((tween) => tween.kill());
+      timelines.forEach((tl) => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      });
       railTween?.scrollTrigger?.kill();
       railTween?.kill();
     };
@@ -125,8 +155,21 @@ export default function ExperienceTimeline() {
                 </p>
 
                 <div className="mt-4 text-[0.9rem] leading-relaxed text-white/70">
-                  <div dangerouslySetInnerHTML={{ __html: entry.description }}></div>
+                  <div dangerouslySetInnerHTML={{ __html: entry.description }} />
                 </div>
+
+                {entry.bulletPoints?.length ? (
+                  <ul className="mt-3 list-disc space-y-2 pl-4 marker:text-white/35">
+                    {entry.bulletPoints.map((html, bulletIndex) => (
+                      <li
+                        key={bulletIndex}
+                        data-experience-bullet
+                        className="text-[0.88rem] leading-relaxed text-white/70 [&_strong]:font-semibold [&_strong]:text-white/85"
+                        dangerouslySetInnerHTML={{ __html: html }}
+                      />
+                    ))}
+                  </ul>
+                ) : null}
 
                 <HrLine direction="right" />
 
