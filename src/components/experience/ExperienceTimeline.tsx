@@ -3,11 +3,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  experienceContent,
-  formatDuration,
-  formatMonthYear,
-} from "@/lib/experienceContent";
+import experienceData from "../../lib/experienceData.json";
+import HrLine from "../ui/HrLine";
+import Image from "next/image";
+import { getDuration, getMonthNameYear } from "@/utils/getDate";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -90,14 +89,14 @@ export default function ExperienceTimeline() {
       />
 
       <ol className="flex flex-col gap-12 lg:gap-16">
-        {experienceContent.map((entry, index) => {
+        {experienceData.map((entry, index) => {
           const isRight = index % 2 === 1;
           return (
             <li key={`${entry.company}-${entry.start}`} data-timeline-item className="relative pl-12 lg:pl-0">
               <span
                 className="absolute left-[18px] top-1 z-10 inline-flex h-8 min-w-8 max-w-[3.75rem] -translate-x-1/2 items-center justify-center whitespace-nowrap rounded-full border border-glass-border bg-ink px-1.5 text-[0.62rem] font-semibold uppercase tracking-wide text-accent-orange-soft shadow-[0_0_0_4px_var(--color-ink),0_0_20px_rgba(255,122,60,0.25)] lg:left-1/2 lg:h-10 lg:min-w-10 lg:px-2 lg:text-[0.7rem]"
               >
-                {formatDuration(entry.start, entry.end)}
+                {getDuration(entry.start || "", entry.end || "")}
               </span>
 
               <div
@@ -108,7 +107,7 @@ export default function ExperienceTimeline() {
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--color-accent-orange),var(--color-accent-orange-soft))] text-sm font-bold text-ink">
-                    {initials(entry.company)}
+                    {entry?.companyLogo ? <Image className="h-full w-full object-contain rounded-full" src={entry.companyLogo} alt={entry.company} width={48} height={48} /> : initials(entry.company)}
                   </div>
                   <div className="min-w-0">
                     <h3 className="truncate text-base font-semibold text-[#f5f2ec] lg:text-lg">
@@ -119,12 +118,17 @@ export default function ExperienceTimeline() {
                 </div>
 
                 <p className="mt-2 text-xs text-white/50">
-                  {formatMonthYear(entry.start)} — {formatMonthYear(entry.end)}
+                  {getMonthNameYear(entry?.start || '')} — {' '}
+                  {!entry?.end
+                    ? 'Present'
+                    : getMonthNameYear(entry?.end || '')}
                 </p>
 
-                <p className="mt-4 text-[0.9rem] leading-relaxed text-white/70">
-                  {entry.description}
-                </p>
+                <div className="mt-4 text-[0.9rem] leading-relaxed text-white/70">
+                  <div dangerouslySetInnerHTML={{ __html: entry.description }}></div>
+                </div>
+
+                <HrLine direction="right" />
 
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {entry.skills.map((skill) => (
