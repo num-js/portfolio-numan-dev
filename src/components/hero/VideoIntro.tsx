@@ -27,7 +27,31 @@ export default function VideoIntro() {
   const [isMuted, setIsMuted] = useState(true);
   const [showSoundHint, setShowSoundHint] = useState(false);
 
+  const userPausedRef = useRef(false);
+  const heroInViewRef = useRef(true);
+
   const hasLastName = heroContent.lastName.trim().length > 0;
+
+  function applyPlayback() {
+    const bg = bgVideoRef.current;
+    const fg = fgVideoRef.current;
+    if (!bg || !fg) return;
+
+    const shouldPlay =
+      !userPausedRef.current &&
+      heroInViewRef.current &&
+      document.visibilityState === "visible";
+
+    if (shouldPlay) {
+      bg.play().catch(() => setIsPlaying(false));
+      fg.play().catch(() => setIsPlaying(false));
+      setIsPlaying(true);
+    } else {
+      bg.pause();
+      fg.pause();
+      setIsPlaying(false);
+    }
+  }
 
   // Entrance animation + scroll-linked cinematic fade as the next
   // section slides over this sticky hero.
@@ -106,16 +130,26 @@ export default function VideoIntro() {
     };
   }, []);
 
-  // Autoplay both video layers on mount.
+  // Play only while the hero is uncovered. The hero is sticky, so observing it
+  // alone stays intersecting under later sections — observe the following
+  // section and keep playing only while it sits fully below the viewport
+  // (paused once it enters, and stays paused after it scrolls past).
   useEffect(() => {
-    const bg = bgVideoRef.current;
-    const fg = fgVideoRef.current;
-    [bg, fg].forEach((video) => {
-      if (!video) return;
-      video.play().catch(() => {
-        setIsPlaying(false);
-      });
-    });
+    const section = sectionRef.current;
+    const next = section?.nextElementSibling;
+    if (!section || !next) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        heroInViewRef.current =
+          entry.boundingClientRect.top > window.innerHeight * 0.08;
+        applyPlayback();
+      },
+      { threshold: [0, 0.08, 0.25, 0.5, 0.75, 1] }
+    );
+    observer.observe(next);
+
+    return () => observer.disconnect();
   }, []);
 
   // Sound hint appears once things settle, then auto-hides.
@@ -134,18 +168,8 @@ export default function VideoIntro() {
   }, [showSoundHint]);
 
   function togglePlay() {
-    const bg = bgVideoRef.current;
-    const fg = fgVideoRef.current;
-    if (!bg || !fg) return;
-
-    if (isPlaying) {
-      bg.pause();
-      fg.pause();
-    } else {
-      bg.play().catch(() => {});
-      fg.play().catch(() => {});
-    }
-    setIsPlaying(!isPlaying);
+    userPausedRef.current = isPlaying;
+    applyPlayback();
   }
 
   function toggleMute() {
