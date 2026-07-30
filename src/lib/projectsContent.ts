@@ -3,6 +3,8 @@ export type Project = {
   name: string;
   description: string;
   image: string;
+  /** When the screenshot is mostly white/bright, use a solid card fill instead of glass. */
+  lightScreenshot?: boolean;
   demoUrl: string;
   repoUrl?: string;
   tech: string[];
@@ -11,6 +13,25 @@ export type Project = {
 // Real, currently-shipped projects — same editable-config pattern as
 // heroContent.ts / experienceContent.ts / skillsContent.ts.
 export const projectsContent: Project[] = [
+  {
+    id: "struct-ecom",
+    name: "Struct Ecom",
+    description: "Struct Ecom is a fully customizable, scalable eCommerce platform designed to help businesses launch, manage, and grow their online stores with complete flexibility and control. It offers powerful features like advanced product management, seamless checkout, analytics, and tailored solutions to meet unique business requirements.",
+    image: "/images/projects/struct-ecom.png",
+    lightScreenshot: true,
+    demoUrl: "https://struct-ecom.vercel.app",
+    repoUrl: "",
+    tech: ["Next.js", "React", "Node.js", "MongoDB", "Tailwind CSS", "Shadcn", "Motion", "Typescript"]
+  },
+  {
+    id: "namifyr",
+    name: "Namifyr - Name Generator",
+    description: "Namifyr is an AI-powered brand and business name generator that helps creators and startup founders generate names, check domain availability, and validate social media handles in a single workflow",
+    image: "/images/projects/namifyr.png",
+    demoUrl: "https://namifyr.com",
+    repoUrl: "",
+    tech: ["React", "Next.js", "Tailwind CSS", "Shadcn", "Motion", "Node.js", "Typescript"]
+  },
   {
     id: "struct-ui",
     name: "Struct-UI",
@@ -36,6 +57,7 @@ export const projectsContent: Project[] = [
     description:
       "A web application for an offline computer training institute, enabling students to apply for admissions and track attendance digitally, with a comprehensive admin panel for courses, students, and fees.",
     image: "/images/projects/aictc.png",
+    lightScreenshot: true,
     demoUrl: "https://aictc.vercel.app",
     tech: ["Next.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
   },

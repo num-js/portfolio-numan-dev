@@ -134,7 +134,10 @@ export default function ProjectsGallery() {
             <div
               data-project-card
               className={
-                "relative z-10 -mt-8 mx-3 rounded-2xl border border-accent-orange-soft/40 bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6),0_0_45px_-14px_rgba(255,122,60,0.3)] backdrop-blur-xl transition-transform duration-500 will-change-transform hover:-translate-y-1 sm:absolute sm:mx-0 sm:mt-0 sm:-bottom-10 sm:w-[300px] lg:w-[320px] " +
+                "relative z-10 -mt-8 mx-3 rounded-2xl border border-accent-orange-soft/40 p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6),0_0_45px_-14px_rgba(255,122,60,0.3)] transition-transform duration-500 will-change-transform hover:-translate-y-1 sm:absolute sm:mx-0 sm:mt-0 sm:-bottom-10 sm:w-[300px] lg:w-[320px] " +
+                (project.lightScreenshot
+                  ? "bg-[#1c1d22]/90 backdrop-blur-xl "
+                  : "bg-glass backdrop-blur-xl ") +
                 (isRight
                   ? "sm:left-auto sm:right-6 lg:right-10"
                   : "sm:right-auto sm:left-6 lg:left-10")
