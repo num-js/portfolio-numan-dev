@@ -19,7 +19,7 @@ export const projectsContent: Project[] = [
     description: "Struct Ecom is a fully customizable, scalable eCommerce platform designed to help businesses launch, manage, and grow their online stores with complete flexibility and control. It offers powerful features like advanced product management, seamless checkout, analytics, and tailored solutions to meet unique business requirements.",
     image: "/images/projects/struct-ecom.png",
     lightScreenshot: true,
-    demoUrl: "https://struct-ecom.vercel.app",
+    demoUrl: "https://struct-ecom-marketing.vercel.app",
     repoUrl: "",
     tech: ["Next.js", "React", "Node.js", "MongoDB", "Tailwind CSS", "Shadcn", "Motion", "Typescript"]
   },
