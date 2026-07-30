@@ -72,7 +72,7 @@ export default function OrbitingCircles({
   const maxRadius = Math.max(...safeRings.map((r) => r.radius));
 
   return (
-    <TooltipProvider delayDuration={100}>
+    <TooltipProvider delay={100}>
       <div
         ref={containerRef}
         className={`relative ${className}`}
