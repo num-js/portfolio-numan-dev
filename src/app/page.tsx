@@ -2,6 +2,7 @@ import VideoIntro from "@/components/hero/VideoIntro";
 import ExperienceTimeline from "@/components/experience/ExperienceTimeline";
 import ProjectsGallery from "@/components/projects/ProjectsGallery";
 import SkillsConstellation from "@/components/skills/SkillsConstellation";
+import SkillsCategoryOrbits from "@/components/skills/SkillsCategoryOrbits";
 import AcademicsSection from "@/components/academics/AcademicsSection";
 
 export default function Home() {
@@ -47,6 +48,7 @@ export default function Home() {
         </div>
 
         <SkillsConstellation />
+        <SkillsCategoryOrbits />
       </section>
 
       <section

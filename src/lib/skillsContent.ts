@@ -64,7 +64,7 @@ export const skillsContent: SkillCategory[] = [
   },
   {
     id: "tools",
-    label: "Other Tools",
+    label: "Tools",
     skills: [
       { name: "VS Code", icon: VscVscode, color: "#007acc" },
       { name: "Postman", icon: SiPostman, color: "#ff6c37" },
