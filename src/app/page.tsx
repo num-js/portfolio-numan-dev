@@ -2,6 +2,7 @@ import VideoIntro from "@/components/hero/VideoIntro";
 import ExperienceTimeline from "@/components/experience/ExperienceTimeline";
 import ProjectsGallery from "@/components/projects/ProjectsGallery";
 import SkillsConstellation from "@/components/skills/SkillsConstellation";
+import AcademicsSection from "@/components/academics/AcademicsSection";
 
 export default function Home() {
   return (
@@ -66,6 +67,26 @@ export default function Home() {
         </div>
 
         <ProjectsGallery />
+      </section>
+
+      <section
+        id="academics"
+        className="relative z-[1] border-t border-white/6 bg-ink px-[clamp(1.25rem,6vw,6rem)] py-[clamp(4rem,12vh,7rem)]"
+      >
+        <div className="mx-auto mb-30 max-w-[760px] text-center lg:mb-20">
+          <p className="mb-5 text-[0.75rem] font-semibold uppercase tracking-[0.28em] text-accent-orange-soft">
+            Foundations
+          </p>
+          <h2 className="mb-5 text-[clamp(1.8rem,4.5vw,3rem)] font-bold leading-[1.15] tracking-[-0.01em] text-[#f5f2ec]">
+            Academics
+          </h2>
+          <p className="text-[clamp(0.95rem,1.2vw,1.1rem)] leading-[1.7] text-mist/70">
+            Where the formal training started — degrees on paper, curiosity
+            that outlasted the syllabus.
+          </p>
+        </div>
+
+        <AcademicsSection />
       </section>
     </main>
   );

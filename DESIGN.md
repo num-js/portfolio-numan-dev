@@ -42,6 +42,8 @@ GSAP is the motion engine everywhere (no Framer Motion / `motion` in this projec
 - **Section header:** small uppercase orange tagline + bold heading + one supporting sentence, centered, `mb-16 lg:mb-20` above the section body. Used identically by the Experience section; reuse rather than reinvent per-section.
 - **Section stacking:** each content section below the hero is an `id`-anchored `<section>` with `bg-ink`, `rounded-t-[clamp(20px,3vw,40px)]`, and a large negative-offset box-shadow (`shadow-[0_-60px_120px_-40px_rgba(0,0,0,0.7)]`) so it visually "rises" over the sticky hero as the user scrolls.
 - **Floating overlap card (Projects gallery):** a full-width screenshot with a smaller `accent-orange-soft`-bordered glass card overlapping one of its bottom corners (alternating left/right per project). On mobile the card stacks below the image in normal flow (`relative`, `-mt-8` overlap); from `sm:` up it switches to `absolute` corner positioning (`sm:w-[300px] lg:w-[320px]`). Keep those breakpoint-specific layout modes — collapsing them into a single strategy was the root cause of a previous layout bug.
+- **Academics timeline (left rail):** a single left-aligned vertical rail (`data-academics-rail`) with orange-gradient milestone badges (graduation cap SVG or level number) and glass cards for each degree. BCA semester marks render in a slightly tilted dark glass table (`sm:-rotate-2`); mobile uses horizontal scroll without tilt. Certificate/marksheet previews open in a native `<dialog>` lightbox (`CertificateDialog.tsx`), not a new tab.
+- **Academics illustration (right column):** `numan-learning.png` with a glass speech bubble linking to `#skills`, ambient float loop on the illustration (GSAP `sine.inOut`, gated by reduced motion). Two-column grid at `lg:` (`lg:grid-cols-[1fr_min(420px,38%)]`); stacks below the timeline on smaller viewports.
 
 ## Layout
 
@@ -49,4 +51,4 @@ Tailwind CSS v4 utility classes only — no CSS Modules, no separate stylesheets
 
 ## Icons
 
-No icon library yet as of this writing — all existing icons (playback controls) are hand-rolled inline SVG. The Skills section is the first place a library (`react-icons`, `react-icons/si` subpath) is introduced, specifically for recognizable real brand/tech logos; keep using that same subpath for any future tech-logo needs rather than mixing in a second icon set.
+Hand-rolled inline SVG for playback controls and the academics graduation-cap badge. `react-icons/si` is used for recognizable brand/tech logos in the Skills section and GitHub links in Projects; keep using that subpath for future tech-logo needs rather than mixing in a second icon set.
