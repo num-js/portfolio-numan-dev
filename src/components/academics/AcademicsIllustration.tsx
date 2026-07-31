@@ -125,7 +125,7 @@ export default function AcademicsIllustration() {
             width={520}
             height={520}
             priority={false}
-            className="relative z-[1] h-auto w-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
+            className="move-up-down 2s linear infinite relative z-[1] h-auto w-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
           />
         </div>
       </div>

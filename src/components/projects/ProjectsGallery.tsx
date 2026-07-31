@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SiGithub } from "react-icons/si";
 import { projectsContent } from "@/lib/projectsContent";
+import HrLine from "../ui/HrLine";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -139,7 +140,7 @@ export default function ProjectsGallery() {
                   : "sm:right-auto sm:left-6 lg:left-10")
               }
             >
-              <div data-reveal className="mb-3 flex items-start justify-between gap-3">
+              <div data-reveal className="flex items-start justify-between gap-3">
                 <h3 className="text-xl font-bold tracking-tight text-accent-orange-soft">
                   {project.name}
                 </h3>
@@ -157,10 +158,7 @@ export default function ProjectsGallery() {
                 )}
               </div>
 
-              <span
-                aria-hidden="true"
-                className="mb-4 block h-px w-full bg-linear-to-r from-accent-orange-soft/60 to-transparent"
-              />
+              <HrLine />
 
               <p data-reveal className="mb-4 text-[0.85rem] leading-relaxed text-white/70">
                 {project.description}
