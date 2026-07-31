@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect, ReactNode } from 'react';
+import { useState, useRef, type ReactNode } from 'react';
 import {
   Tooltip,
   TooltipContent,
@@ -53,21 +53,6 @@ export default function OrbitingCircles({
   const [pausedRingIndex, setPausedRingIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const styleId = 'orbiting-circles-keyframes';
-    if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      style.textContent = `
-        @keyframes orbit-spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-  }, []);
-
   const safeRings = rings && rings.length > 0 ? rings : defaultRings;
   const maxRadius = Math.max(...safeRings.map((r) => r.radius));
 
@@ -79,26 +64,26 @@ export default function OrbitingCircles({
         style={{ width: maxRadius * 2 + 80, height: maxRadius * 2 + 80 }}
         tabIndex={0}
       >
-      {/* Center Content */}
       {centerContent && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
           {centerContent}
         </div>
       )}
 
-      {/* Orbit Rings */}
       {safeRings.map((ring, ringIndex) => {
         const { radius, items, duration = 20, reverse = false, initialRotation = 0 } = ring;
         const direction = reverse ? 'reverse' : 'normal';
         const isThisRingPaused = pauseOnHover && pausedRingIndex === ringIndex;
+        // Offset the animation timeline instead of setting a conflicting inline transform.
+        const startDelay =
+          initialRotation !== 0 ? `${(-(initialRotation / 360) * duration).toFixed(4)}s` : undefined;
 
         return (
           <div
             key={ringIndex}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{ width: radius * 2, height: radius * 2 }}
           >
-            {/* Orbit Path */}
             {showOrbits && (
               <div
                 className={`absolute inset-0 rounded-full border transition-colors duration-300 ${
@@ -107,30 +92,36 @@ export default function OrbitingCircles({
               />
             )}
 
-            {/* Rotating Container */}
             <div
               className="absolute inset-0"
               style={{
-                animation: `orbit-spin ${duration}s linear infinite ${direction}`,
+                animationName: 'orbit-spin',
+                animationDuration: `${duration}s`,
+                animationTimingFunction: 'linear',
+                animationIterationCount: 'infinite',
+                animationDirection: direction,
                 animationPlayState: isThisRingPaused ? 'paused' : 'running',
-                transform: `rotate(${initialRotation}deg)`,
+                animationDelay: startDelay,
               }}
             >
-              {/* Orbit Items */}
               {items.map((item, itemIndex) => {
-                const angle = (360 / items.length) * itemIndex;
-                const radian = (angle * Math.PI) / 180;
-                const x = Math.cos(radian) * radius;
-                const y = Math.sin(radian) * radius;
+                // Pure CSS placement — identical strings on server and client (no cos/sin).
+                const angle = ((360 / items.length) * itemIndex).toFixed(4);
+                const counterAngle = (-Number(angle)).toFixed(4);
 
                 const iconContent = (
                   <div
-                    className={`flex items-center justify-center transition-transform duration-300 cursor-pointer ${
+                    className={`flex cursor-pointer items-center justify-center ${
                       isThisRingPaused ? 'scale-110' : ''
                     } ${item.className || ''}`}
                     style={{
-                      animation: `orbit-spin ${duration}s linear infinite ${reverse ? 'normal' : 'reverse'}`,
+                      animationName: 'orbit-spin',
+                      animationDuration: `${duration}s`,
+                      animationTimingFunction: 'linear',
+                      animationIterationCount: 'infinite',
+                      animationDirection: reverse ? 'normal' : 'reverse',
                       animationPlayState: isThisRingPaused ? 'paused' : 'running',
+                      animationDelay: startDelay,
                     }}
                   >
                     {item.icon}
@@ -140,9 +131,9 @@ export default function OrbitingCircles({
                 return (
                   <div
                     key={item.id || itemIndex}
-                    className="absolute left-1/2 top-1/2 pointer-events-auto"
+                    className="pointer-events-auto absolute left-1/2 top-1/2"
                     style={{
-                      transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
+                      transform: `translate(-50%, -50%) rotate(${angle}deg) translateX(${radius}px) rotate(${counterAngle}deg)`,
                     }}
                     onMouseEnter={() => pauseOnHover && setPausedRingIndex(ringIndex)}
                     onMouseLeave={() => pauseOnHover && setPausedRingIndex(null)}
