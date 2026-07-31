@@ -1,21 +1,25 @@
 import type { IconType } from "react-icons";
+import { FaAws } from "react-icons/fa";
 import {
-  SiDocker,
+  SiAngular,
   SiExpress,
-  SiFigma,
   SiGit,
-  SiGraphql,
-  SiGreensock,
+  SiGithub,
+  SiJavascript,
+  SiJira,
   SiMongodb,
+  SiMui,
   SiNextdotjs,
   SiNodedotjs,
-  SiPostgresql,
+  SiOpenapiinitiative,
+  SiPostman,
+  SiPwa,
   SiReact,
+  SiRedux,
+  SiSocketdotio,
   SiTailwindcss,
-  SiThreedotjs,
-  SiTypescript,
-  SiVercel,
 } from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
 
 export type Skill = {
   name: string;
@@ -30,40 +34,44 @@ export type SkillCategory = {
   skills: Skill[];
 };
 
-// Placeholder skill set — edit freely, same pattern as heroContent.ts /
-// experienceContent.ts. Categories drive one orbit cluster each.
+// Skill set mirrored from the previous portfolio — categories drive one
+// orbit cluster each.
 export const skillsContent: SkillCategory[] = [
   {
     id: "frontend",
     label: "Frontend",
     skills: [
-      { name: "React", icon: SiReact, color: "#61dafb" },
       { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
-      { name: "TypeScript", icon: SiTypescript, color: "#3178c6" },
+      { name: "React.js", icon: SiReact, color: "#61dafb" },
+      { name: "Angular", icon: SiAngular, color: "#dd0031" },
+      { name: "Redux", icon: SiRedux, color: "#764abc" },
+      { name: "Material-UI", icon: SiMui, color: "#007fff" },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#38bdf8" },
-      { name: "Three.js", icon: SiThreedotjs, color: "#ffffff" },
+      { name: "JavaScript", icon: SiJavascript, color: "#f7df1e" },
     ],
   },
   {
     id: "backend",
-    label: "Backend & Data",
+    label: "Backend",
     skills: [
       { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
-      { name: "Express", icon: SiExpress, color: "#e8e8e8" },
-      { name: "GraphQL", icon: SiGraphql, color: "#e10098" },
-      { name: "PostgreSQL", icon: SiPostgresql, color: "#4169e1" },
+      { name: "Express.js", icon: SiExpress, color: "#e8e8e8" },
       { name: "MongoDB", icon: SiMongodb, color: "#47a248" },
+      { name: "Socket IO", icon: SiSocketdotio, color: "#ffffff" },
+      { name: "AWS-S3", icon: FaAws, color: "#ff9900" },
+      { name: "Rest API", icon: SiOpenapiinitiative, color: "#6ba539" },
     ],
   },
   {
     id: "tools",
-    label: "Tools & Motion",
+    label: "Tools",
     skills: [
-      { name: "GSAP", icon: SiGreensock, color: "#88ce02" },
+      { name: "VS Code", icon: VscVscode, color: "#007acc" },
+      { name: "Postman", icon: SiPostman, color: "#ff6c37" },
       { name: "Git", icon: SiGit, color: "#f05032" },
-      { name: "Docker", icon: SiDocker, color: "#2496ed" },
-      { name: "Figma", icon: SiFigma, color: "#f24e1e" },
-      { name: "Vercel", icon: SiVercel, color: "#ffffff" },
+      { name: "GitHub", icon: SiGithub, color: "#ffffff" },
+      { name: "Jira", icon: SiJira, color: "#0052cc" },
+      { name: "PWA", icon: SiPwa, color: "#5a0fc8" },
     ],
   },
 ];
