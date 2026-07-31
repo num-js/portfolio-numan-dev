@@ -36,39 +36,39 @@ export const academicsContent: AcademicEntry[] = [
       label: "DGPA:",
       percentage: "8.01 / 10",
       docTitle: "Bachelor Degree",
-      link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/certifications/BCA-Provisional%20Certificate.jpg",
+      link: "/assets/marksheets/bca/BCA-degree.jpg",
       semMarks: {
         headers: ["Semester", "Marks", ""],
         rows: [
           {
             sem: "1st Sem",
             marks: "7.57",
-            link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/bca/sem-1.jpg",
+            link: "/assets/marksheets/bca/sem-1.jpg",
           },
           {
             sem: "2nd Sem",
             marks: "7.29",
-            link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/bca/sem-2.jpg",
+            link: "/assets/marksheets/bca/sem-2.jpg",
           },
           {
             sem: "3rd Sem",
             marks: "6.86",
-            link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/bca/sem-3.jpg",
+            link: "/assets/marksheets/bca/sem-3.jpg",
           },
           {
             sem: "4th Sem",
             marks: "7.74",
-            link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/bca/sem-4.jpg",
+            link: "/assets/marksheets/bca/sem-4.jpg",
           },
           {
             sem: "5th Sem",
             marks: "8.68",
-            link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/bca/sem-5.jpg",
+            link: "/assets/marksheets/bca/sem-5.jpg",
           },
           {
             sem: "6th Sem",
             marks: "9.93",
-            link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/bca/sem-6.jpg",
+            link: "/assets/marksheets/bca/sem-6.jpg",
           },
         ],
       },
@@ -86,7 +86,7 @@ export const academicsContent: AcademicEntry[] = [
       label: "Marks:",
       percentage: "68%",
       docTitle: "Higher Secondary Result",
-      link: "https://raw.githubusercontent.com/mdnmnahmed/personal-resourses/certi/marksheets/hs/HS-Marksheet.jpg",
+      link: "/assets/marksheets/hs/HS-Marksheet.jpg",
     },
   },
 ];
