@@ -1,12 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import OrbitingCircles from "@/components/ui/orbiting-circles";
-import SkillsGridFallback from "./SkillsGridFallback";
 import { skillsContent } from "@/lib/skillsContent";
-
-const DESKTOP_QUERY = "(min-width: 1024px)";
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 const RING_LAYOUT = [
   { radius: 100, duration: 22, reverse: false },
@@ -14,31 +9,8 @@ const RING_LAYOUT = [
   { radius: 230, duration: 42, reverse: false },
 ] as const;
 
+/** Combined multi-ring skills orbit. */
 export default function SkillsConstellation() {
-  // SSR-safe default: plain grid until the client confirms room + motion.
-  const [showOrbit, setShowOrbit] = useState(false);
-
-  useEffect(() => {
-    const desktopQuery = window.matchMedia(DESKTOP_QUERY);
-    const motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
-
-    const update = () => {
-      setShowOrbit(desktopQuery.matches && !motionQuery.matches);
-    };
-    update();
-
-    desktopQuery.addEventListener("change", update);
-    motionQuery.addEventListener("change", update);
-    return () => {
-      desktopQuery.removeEventListener("change", update);
-      motionQuery.removeEventListener("change", update);
-    };
-  }, []);
-
-  if (!showOrbit) {
-    return <SkillsGridFallback />;
-  }
-
   const rings = skillsContent.map((category, index) => {
     const layout = RING_LAYOUT[index] ?? RING_LAYOUT[RING_LAYOUT.length - 1];
 

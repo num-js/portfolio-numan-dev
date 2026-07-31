@@ -1,12 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import OrbitingCircles from "@/components/ui/orbiting-circles";
-import SkillsGridFallback from "./SkillsGridFallback";
 import { skillsContent, type Skill } from "@/lib/skillsContent";
-
-const DESKTOP_QUERY = "(min-width: 1024px)";
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 function SkillOrbitIcon({ skill }: { skill: Skill }) {
   const Icon = skill.icon;
@@ -22,29 +17,6 @@ function SkillOrbitIcon({ skill }: { skill: Skill }) {
 
 /** One OrbitingCircles cluster per skill category (Frontend / Backend / Tools). */
 export default function SkillsCategoryOrbits() {
-  const [showOrbit, setShowOrbit] = useState(false);
-
-  useEffect(() => {
-    const desktopQuery = window.matchMedia(DESKTOP_QUERY);
-    const motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
-
-    const update = () => {
-      setShowOrbit(desktopQuery.matches && !motionQuery.matches);
-    };
-    update();
-
-    desktopQuery.addEventListener("change", update);
-    motionQuery.addEventListener("change", update);
-    return () => {
-      desktopQuery.removeEventListener("change", update);
-      motionQuery.removeEventListener("change", update);
-    };
-  }, []);
-
-  if (!showOrbit) {
-    return <SkillsGridFallback />;
-  }
-
   return (
     <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-6">
       {skillsContent.map((category, index) => (
