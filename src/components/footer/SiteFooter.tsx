@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FooterBrand from "./FooterBrand";
 import SocialLinks from "@/components/shared/SocialLinks";
+import ResumeDownloadLink from "@/components/shared/ResumeDownloadLink";
 import {
   footerBio,
   footerNavLinks,
@@ -94,6 +95,7 @@ export default function SiteFooter() {
                   {footerBio}
                 </p>
                 <SocialLinks className="mt-6 flex flex-wrap gap-3" />
+                <ResumeDownloadLink className="mt-6" />
               </div>
 
               <div className="grid gap-8 sm:grid-cols-2">

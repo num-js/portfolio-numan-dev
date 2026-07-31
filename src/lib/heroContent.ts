@@ -8,4 +8,6 @@ export const heroContent = {
     "I build cinematic, high-performance web experiences at the intersection of design, motion, and code.",
   videoSrc: "/videos/hero-video.mp4",
   scrollTargetId: "experience",
+  resumeHref: "/assets/resume/MD_Numan_Ahmed_Resume.pdf",
+  resumeLabel: "Resume",
 };

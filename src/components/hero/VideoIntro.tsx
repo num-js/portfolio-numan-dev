@@ -8,6 +8,7 @@ import PlaybackControls from "./PlaybackControls";
 import SoundHint from "./SoundHint";
 import ScrollIndicator from "./ScrollIndicator";
 import SocialLinks from "@/components/shared/SocialLinks";
+import ResumeDownloadLink from "@/components/shared/ResumeDownloadLink";
 import { heroContent } from "@/lib/heroContent";
 
 if (typeof window !== "undefined") {
@@ -266,8 +267,12 @@ export default function VideoIntro() {
         >
           {heroContent.description}
         </p>
-        <div data-hero-social className="pointer-events-auto mt-5 sm:mt-6">
+        <div
+          data-hero-social
+          className="pointer-events-auto mt-5 flex flex-wrap items-center gap-3 sm:mt-6 sm:gap-4"
+        >
           <SocialLinks className="flex flex-wrap gap-2.5 sm:gap-3" />
+          <ResumeDownloadLink />
         </div>
       </div>
 
