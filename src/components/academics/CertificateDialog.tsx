@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 type CertificateDialogProps = {
@@ -10,10 +10,6 @@ type CertificateDialogProps = {
   compact?: boolean;
 };
 
-function isImageReady(img: HTMLImageElement | null | undefined) {
-  return Boolean(img?.complete && img.naturalWidth > 0);
-}
-
 export default function CertificateDialog({
   imageSrc,
   title,
@@ -21,25 +17,9 @@ export default function CertificateDialog({
   compact = false,
 }: CertificateDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const [loaded, setLoaded] = useState(false);
-
-  const syncLoadedFromImage = () => {
-    if (isImageReady(imageRef.current)) {
-      setLoaded(true);
-    }
-  };
 
   const open = () => {
     dialogRef.current?.showModal();
-    // Cached images stay complete in the DOM and won't re-fire onLoad after a reset.
-    if (isImageReady(imageRef.current)) {
-      setLoaded(true);
-    } else {
-      setLoaded(false);
-      // onLoad may have fired before the listener attached; re-check after paint.
-      requestAnimationFrame(syncLoadedFromImage);
-    }
   };
 
   const close = () => {
@@ -58,11 +38,6 @@ export default function CertificateDialog({
     dialog.addEventListener("cancel", handleCancel);
     return () => dialog.removeEventListener("cancel", handleCancel);
   }, []);
-
-  useEffect(() => {
-    setLoaded(false);
-    syncLoadedFromImage();
-  }, [imageSrc]);
 
   return (
     <>
@@ -127,21 +102,13 @@ export default function CertificateDialog({
           </div>
 
           <div className="relative min-h-[200px] flex-1 overflow-auto bg-black/40 p-3 sm:p-5">
-            {!loaded && (
-              <div
-                aria-hidden="true"
-                className="absolute inset-3 animate-pulse rounded-xl bg-white/5 sm:inset-5"
-              />
-            )}
             <Image
-              ref={imageRef}
               src={imageSrc}
               alt={title}
               width={1200}
               height={1600}
               unoptimized
-              onLoad={() => setLoaded(true)}
-              className={`mx-auto h-auto w-full max-w-full rounded-lg object-contain transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+              className="mx-auto h-auto w-full max-w-full rounded-lg object-contain"
             />
           </div>
         </div>
