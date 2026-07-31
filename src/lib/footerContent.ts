@@ -31,7 +31,7 @@ export const footerSkillHighlights: string[] = [
 export const socialLinks: SocialLink[] = [
   {
     label: "GitHub",
-    href: "https://github.com/mdnmnahmed",
+    href: "https://github.com/num-js",
     icon: "github",
   },
   {
@@ -46,7 +46,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     label: "Phone",
-    href: "tel:9647664654",
+    href: "tel:7001959252",
     icon: "phone",
   },
   {

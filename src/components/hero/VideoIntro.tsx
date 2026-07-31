@@ -7,6 +7,7 @@ import CinematicLayer from "./CinematicLayer";
 import PlaybackControls from "./PlaybackControls";
 import SoundHint from "./SoundHint";
 import ScrollIndicator from "./ScrollIndicator";
+import SocialLinks from "@/components/shared/SocialLinks";
 import { heroContent } from "@/lib/heroContent";
 
 if (typeof window !== "undefined") {
@@ -40,6 +41,7 @@ export default function VideoIntro() {
     const nameLines = content.querySelectorAll("[data-hero-name-line]");
     const role = content.querySelector("[data-hero-role]");
     const description = content.querySelector("[data-hero-description]");
+    const social = content.querySelector("[data-hero-social]");
     const chrome = section.querySelectorAll("[data-hero-chrome]");
 
     const tl = gsap.timeline({
@@ -72,6 +74,11 @@ export default function VideoIntro() {
         description,
         { y: 16, opacity: 0, duration: 0.9 },
         1.05
+      )
+      .from(
+        social,
+        { y: 12, opacity: 0, duration: 0.8 },
+        1.15
       )
       .from(
         chrome,
@@ -205,7 +212,7 @@ export default function VideoIntro() {
           {heroContent.tagline}
         </p>
         <h1
-          className="mb-[clamp(1rem,2.4vw,1.5rem)] flex flex-col text-[clamp(3.2rem,11vw,8.5rem)] font-extrabold leading-[0.92] tracking-[-0.02em] text-[#f5f2ec] [text-shadow:0_12px_60px_rgba(0,0,0,0.45)]"
+          className="mb-[clamp(1rem,2.4vw,1.5rem)] flex flex-col text-[clamp(2.2rem,7.5vw,6rem)] font-extrabold leading-[0.92] tracking-[-0.02em] text-[#f5f2ec] [text-shadow:0_12px_60px_rgba(0,0,0,0.45)]"
           aria-label={`${heroContent.firstName} ${heroContent.lastName}`.trim()}
         >
           <span
@@ -235,6 +242,9 @@ export default function VideoIntro() {
         >
           {heroContent.description}
         </p>
+        <div data-hero-social className="pointer-events-auto mt-5 sm:mt-6">
+          <SocialLinks className="flex flex-wrap gap-2.5 sm:gap-3" />
+        </div>
       </div>
 
       <div data-hero-chrome>
