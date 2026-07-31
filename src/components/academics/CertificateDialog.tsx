@@ -1,7 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type CertificateDialogProps = {
   imageSrc: string;
@@ -17,11 +23,9 @@ export default function CertificateDialog({
   compact = false,
 }: CertificateDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [loaded, setLoaded] = useState(false);
 
   const open = () => {
     dialogRef.current?.showModal();
-    setLoaded(false);
   };
 
   const close = () => {
@@ -43,32 +47,38 @@ export default function CertificateDialog({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={open}
-        aria-label={`${triggerLabel}: ${title}`}
-        title={triggerLabel}
-        className={
-          compact
-            ? "inline-flex shrink-0 items-center justify-center rounded-full p-1 text-white/50 transition-colors duration-300 hover:text-accent-orange-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
-            : "inline-flex shrink-0 items-center justify-center rounded-full border border-accent-orange-soft/40 p-1.5 text-accent-orange-soft transition-colors duration-300 hover:border-accent-orange-soft/60 hover:bg-accent-orange/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
-        }
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          className={compact ? "h-4 w-4" : "h-5 w-5"}
-        >
-          <path
-            d="M14 5h5v5M10 14L19 5M15 5h4v4M5 19h14a2 2 0 0 0 2-2V9"
-            stroke="currentColor"
-            strokeWidth="1.75"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+      <TooltipProvider delay={100}>
+        <Tooltip>
+          <TooltipTrigger
+            type="button"
+            onClick={open}
+            aria-label={`${triggerLabel}: ${title}`}
+            className={
+              compact
+                ? "inline-flex shrink-0 items-center justify-center rounded-full p-1 text-white/50 transition-colors duration-300 hover:text-accent-orange-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
+                : "inline-flex shrink-0 items-center justify-center rounded-full border border-accent-orange-soft/40 p-1.5 text-accent-orange-soft transition-colors duration-300 hover:border-accent-orange-soft/60 hover:bg-accent-orange/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
+            }
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              className={compact ? "h-4 w-4" : "h-5 w-5"}
+            >
+              <path
+                d="M14 5h5v5M10 14L19 5M15 5h4v4M5 19h14a2 2 0 0 0 2-2V9"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            <p>{triggerLabel}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       <dialog
         ref={dialogRef}
@@ -104,20 +114,13 @@ export default function CertificateDialog({
           </div>
 
           <div className="relative min-h-[200px] flex-1 overflow-auto bg-black/40 p-3 sm:p-5">
-            {!loaded && (
-              <div
-                aria-hidden="true"
-                className="absolute inset-3 animate-pulse rounded-xl bg-white/5 sm:inset-5"
-              />
-            )}
             <Image
               src={imageSrc}
               alt={title}
               width={1200}
               height={1600}
               unoptimized
-              onLoad={() => setLoaded(true)}
-              className={`mx-auto h-auto w-full max-w-full rounded-lg object-contain transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+              className="mx-auto h-auto w-full max-w-full rounded-lg object-contain"
             />
           </div>
         </div>
