@@ -13,7 +13,7 @@ export default function ScrollIndicator({ targetId }: ScrollIndicatorProps) {
   return (
     <button
       type="button"
-      className="absolute bottom-[clamp(1.5rem,5vw,2.75rem)] left-1/2 z-[6] flex -translate-x-1/2 cursor-pointer flex-col items-center gap-[0.65rem] border-none bg-transparent text-white/75 transition-[color,transform] duration-300 hover:-translate-y-0.5 hover:text-white"
+      className="absolute bottom-[clamp(5.5rem,13vh,8rem)] left-1/2 z-[6] flex -translate-x-1/2 cursor-pointer flex-col items-center gap-[0.65rem] border-none bg-transparent text-white/75 transition-[color,transform] duration-300 hover:-translate-y-0.5 hover:text-white"
       onClick={handleClick}
       aria-label="Scroll to next section"
     >
