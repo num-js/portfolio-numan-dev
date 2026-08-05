@@ -76,14 +76,14 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="relative border-t border-white/6 bg-glass/90 backdrop-blur-xl">
+      <div className="relative overflow-hidden border-t border-white/6 bg-glass/90 backdrop-blur-xl">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-[8%] top-[10%] h-[220px] w-[220px] rounded-full bg-accent-orange/8 blur-[70px]"
+          className="pointer-events-none absolute -left-[8%] top-[10%] h-[min(220px,45vw)] w-[min(220px,45vw)] rounded-full bg-accent-orange/8 blur-[70px]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-[6%] bottom-[8%] h-[200px] w-[200px] rounded-full bg-accent-blue/10 blur-[65px]"
+          className="pointer-events-none absolute -right-[6%] bottom-[8%] h-[min(200px,40vw)] w-[min(200px,40vw)] rounded-full bg-accent-blue/10 blur-[65px]"
         />
 
         <div className="relative mx-auto max-w-6xl px-[clamp(1.25rem,6vw,6rem)] py-12 lg:py-14">
