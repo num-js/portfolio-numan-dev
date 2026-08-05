@@ -13,7 +13,7 @@ export default function Home() {
 
       <section
         id="experience"
-        className="relative z-[1] rounded-t-[clamp(20px,3vw,40px)] bg-ink px-[clamp(1.25rem,6vw,6rem)] py-[clamp(4rem,12vh,7rem)] shadow-[0_-60px_120px_-40px_rgba(0,0,0,0.7)]"
+        className="relative z-[1] rounded-t-[40px] bg-ink px-6 pt-8 pb-16 shadow-[0_-60px_120px_-40px_rgba(0,0,0,0.7)] sm:px-10 lg:px-24 lg:pt-10 lg:pb-28"
       >
         <div className="mx-auto mb-16 max-w-[760px] text-center lg:mb-20">
           <div className="mb-5">
@@ -30,7 +30,7 @@ export default function Home() {
 
       <section
         id="skills"
-        className="relative z-[1] border-t border-white/6 bg-ink px-[clamp(1.25rem,6vw,6rem)] py-[clamp(4rem,12vh,7rem)]"
+        className="relative z-[1] border-t border-white/6 bg-ink px-6 pt-8 pb-16 sm:px-10 lg:px-24 lg:pt-10 lg:pb-28"
       >
         <div className="mx-auto mb-16 max-w-[760px] text-center lg:mb-20">
           <div className="mb-5">
@@ -47,7 +47,7 @@ export default function Home() {
 
       <section
         id="projects"
-        className="relative z-[1] border-t border-white/6 bg-ink px-[clamp(1.25rem,6vw,6rem)] py-[clamp(4rem,12vh,7rem)]"
+        className="relative z-[1] border-t border-white/6 bg-ink px-6 pt-8 pb-16 sm:px-10 lg:px-24 lg:pt-10 lg:pb-28"
       >
         <div className="mx-auto mb-16 max-w-[760px] text-center lg:mb-20">
           <div className="mb-5">
@@ -64,7 +64,7 @@ export default function Home() {
 
       <section
         id="academics"
-        className="relative z-[1] border-t border-white/6 bg-ink px-[clamp(1.25rem,6vw,6rem)] py-[clamp(4rem,12vh,7rem)]"
+        className="relative z-[1] border-t border-white/6 bg-ink px-6 pt-8 pb-16 sm:px-10 lg:px-24 lg:pt-10 lg:pb-28"
       >
         <div className="mx-auto mb-30 max-w-[760px] text-center lg:mb-20">
           <div className="mb-5">
