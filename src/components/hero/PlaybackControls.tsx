@@ -17,7 +17,7 @@ export default function PlaybackControls({
   onToggleMute,
 }: PlaybackControlsProps) {
   return (
-    <div className="absolute right-[clamp(1.25rem,4vw,3rem)] bottom-[clamp(1.25rem,4vw,3rem)] z-[6] flex gap-3">
+    <div className="absolute right-[clamp(1.25rem,4vw,3rem)] top-[clamp(1.25rem,4vw,3rem)] z-[6] flex gap-3">
       <button
         type="button"
         className={glassButtonClass}

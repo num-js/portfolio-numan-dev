@@ -9,6 +9,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export interface DockItem {
   id: string;
@@ -199,21 +200,20 @@ function DockIcon({
           : { width: size, height: size }
       }
     >
-      {trigger}
-      {enableTooltip && (
-        <span
-          role="tooltip"
-          className={cn(
-            "pointer-events-none absolute left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/12 bg-[#f5f2ec] px-2.5 py-1 text-xs font-medium text-ink opacity-0 shadow-lg transition-opacity duration-150",
-            "group-hover:opacity-100 group-focus-within:opacity-100",
-            tooltipSide === "top"
-              ? "bottom-[calc(100%+0.5rem)]"
-              : "top-[calc(100%+0.5rem)]",
-            showLabelMobile && "hidden md:block"
-          )}
-        >
-          {item.label}
-        </span>
+      {enableTooltip ? (
+        <Tooltip>
+          <TooltipTrigger asChild>{trigger}</TooltipTrigger>
+          <TooltipContent
+            side={tooltipSide}
+            sideOffset={8}
+            variant="white"
+            className={cn(showLabelMobile && "hidden md:block")}
+          >
+            {item.label}
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        trigger
       )}
     </motion.div>
   );
@@ -237,43 +237,45 @@ export default function Dock({
   const isLabeled = labelMode === "below" || labelMode === "responsive";
 
   return (
-    <motion.div
-      onMouseMove={(e) => mouseX.set(e.clientX)}
-      onMouseLeave={() => mouseX.set(Infinity)}
-      className={cn(
-        "mx-auto flex h-fit w-max items-end border",
-        isLabeled ? "rounded-2xl" : "rounded-full",
-        config.pad,
-        config.gap,
-        variantConfig[variant],
-        className
-      )}
-      role="toolbar"
-      aria-label="Dock"
-    >
-      {items.map((item) => (
-        <React.Fragment key={item.id}>
-          <DockIcon
-            item={item}
-            mouseX={mouseX}
-            magnification={magnification}
-            distance={distance}
-            baseSize={config.base}
-            labelClass={config.label}
-            labelMode={labelMode}
-            tooltipSide={resolvedTooltipSide}
-          />
-          {item.dividerAfter && (
-            <div
-              className={cn(
-                "mx-1 w-px shrink-0 self-center bg-white/20",
-                isLabeled ? "h-8" : "h-5"
-              )}
-              aria-hidden="true"
+    <TooltipProvider delayDuration={100}>
+      <motion.div
+        onMouseMove={(e) => mouseX.set(e.clientX)}
+        onMouseLeave={() => mouseX.set(Infinity)}
+        className={cn(
+          "mx-auto flex h-fit w-max items-end border",
+          isLabeled ? "rounded-2xl" : "rounded-full",
+          config.pad,
+          config.gap,
+          variantConfig[variant],
+          className
+        )}
+        role="toolbar"
+        aria-label="Dock"
+      >
+        {items.map((item) => (
+          <React.Fragment key={item.id}>
+            <DockIcon
+              item={item}
+              mouseX={mouseX}
+              magnification={magnification}
+              distance={distance}
+              baseSize={config.base}
+              labelClass={config.label}
+              labelMode={labelMode}
+              tooltipSide={resolvedTooltipSide}
             />
-          )}
-        </React.Fragment>
-      ))}
-    </motion.div>
+            {item.dividerAfter && (
+              <div
+                className={cn(
+                  "mx-1 w-px shrink-0 self-center bg-white/20",
+                  isLabeled ? "h-8" : "h-5"
+                )}
+                aria-hidden="true"
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </motion.div>
+    </TooltipProvider>
   );
 }

@@ -1,29 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   BriefcaseBusiness,
   Code2,
   FolderKanban,
   GraduationCap,
   FileDown,
-  Home,
 } from "lucide-react";
-import { SiGithub } from "react-icons/si";
-import { FaLinkedin } from "react-icons/fa";
 import Dock, { type DockItem } from "@/components/ui/dock";
 import { heroContent } from "@/lib/heroContent";
-import { socialLinks } from "@/lib/footerContent";
 
-const github = socialLinks.find((link) => link.icon === "github");
-const linkedin = socialLinks.find((link) => link.icon === "linkedin");
+const BASE_BOTTOM_PX = 24;
 
 const dockItems: DockItem[] = [
-  {
-    id: "home",
-    icon: <Home strokeWidth={1.75} />,
-    label: "Home",
-    onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }),
-  },
   {
     id: "experience",
     icon: <BriefcaseBusiness strokeWidth={1.75} />,
@@ -49,26 +39,6 @@ const dockItems: DockItem[] = [
     href: "#academics",
     dividerAfter: true,
   },
-  ...(github
-    ? [
-        {
-          id: "github",
-          icon: <SiGithub />,
-          label: github.label,
-          href: github.href,
-        } satisfies DockItem,
-      ]
-    : []),
-  ...(linkedin
-    ? [
-        {
-          id: "linkedin",
-          icon: <FaLinkedin />,
-          label: linkedin.label,
-          href: linkedin.href,
-        } satisfies DockItem,
-      ]
-    : []),
   {
     id: "resume",
     icon: <FileDown strokeWidth={1.75} />,
@@ -78,8 +48,42 @@ const dockItems: DockItem[] = [
 ];
 
 export default function HeroDock() {
+  const [bottomPx, setBottomPx] = useState(BASE_BOTTOM_PX);
+
+  // Keep the dock inside the *visual* viewport on mobile. Before scroll,
+  // browser chrome shrinks the visible area while fixed bottom still
+  // anchors to the larger layout viewport — which clips the dock.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    function syncBottom() {
+      const viewport = window.visualViewport;
+      if (!viewport) return;
+      const chromeOffset = Math.max(
+        0,
+        window.innerHeight - viewport.height - viewport.offsetTop
+      );
+      setBottomPx(BASE_BOTTOM_PX + chromeOffset);
+    }
+
+    syncBottom();
+    vv.addEventListener("resize", syncBottom);
+    vv.addEventListener("scroll", syncBottom);
+    window.addEventListener("resize", syncBottom);
+
+    return () => {
+      vv.removeEventListener("resize", syncBottom);
+      vv.removeEventListener("scroll", syncBottom);
+      window.removeEventListener("resize", syncBottom);
+    };
+  }, []);
+
   return (
-    <div className="absolute bottom-[clamp(1.5rem,5vw,2.75rem)] left-1/2 z-[6] w-max max-w-[calc(100%-1.5rem)] -translate-x-1/2">
+    <div
+      className="fixed left-1/2 z-50 w-max max-w-[calc(100%-1.5rem)] -translate-x-1/2 pb-[env(safe-area-inset-bottom,0px)]"
+      style={{ bottom: bottomPx }}
+    >
       <Dock
         items={dockItems}
         variant="glass"
