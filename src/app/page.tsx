@@ -4,6 +4,7 @@ import ProjectsGallery from "@/components/projects/ProjectsGallery";
 import SkillsShowcase from "@/components/skills/SkillsShowcase";
 import AcademicsSection from "@/components/academics/AcademicsSection";
 import SectionHeader from "@/components/shared/SectionHeader";
+import HeroDock from "@/components/hero/HeroDock";
 
 export default function Home() {
   return (
@@ -83,6 +84,8 @@ export default function Home() {
 
         <AcademicsSection />
       </section>
+
+      <HeroDock />
     </main>
   );
 }

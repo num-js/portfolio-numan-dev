@@ -228,7 +228,7 @@ export default function VideoIntro() {
 
       <div
         ref={contentRef}
-        className="absolute z-[5] max-w-[min(90vw,720px)] will-change-[transform,opacity] left-[clamp(1.5rem,6vw,6rem)] bottom-[clamp(6.5rem,14vh,9rem)] max-[720px]:left-[1.25rem] max-[720px]:right-[1.25rem] max-[720px]:bottom-[6.5rem] max-[720px]:max-w-none"
+        className="absolute z-[5] max-w-[min(90vw,720px)] will-change-[transform,opacity] left-[clamp(1.5rem,6vw,6rem)] bottom-[clamp(7.5rem,16vh,10rem)] max-[720px]:left-[1.25rem] max-[720px]:right-[1.25rem] max-[720px]:bottom-[11rem] max-[720px]:max-w-none"
       >
         <p
           data-hero-tagline
@@ -289,9 +289,9 @@ export default function VideoIntro() {
         <SoundHint visible={showSoundHint && isMuted} onClick={toggleMute} />
       </div>
 
-      <div data-hero-chrome>
+      {/* <div data-hero-chrome>
         <ScrollIndicator targetId={heroContent.scrollTargetId} />
-      </div>
+      </div> */}
     </section>
   );
 }
