@@ -47,7 +47,7 @@ export default function CertificateDialog({
 
   return (
     <>
-      <TooltipProvider delay={100}>
+      <TooltipProvider delayDuration={100}>
         <Tooltip>
           <TooltipTrigger
             type="button"
