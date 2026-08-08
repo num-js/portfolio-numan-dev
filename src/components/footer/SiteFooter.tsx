@@ -12,6 +12,7 @@ import {
   footerNavLinks,
   footerSkillHighlights,
 } from "@/lib/footerContent";
+import { BloomPlant } from "@/components/ui-num/plants";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -60,18 +61,11 @@ export default function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer ref={footerRef} className="relative z-[1] mt-auto">
+    <footer ref={footerRef} className="relative z-[60] mt-auto">
       <div className="relative">
         <div className="absolute right-0 top-[-64px]">
           <div className="flex justify-end px-[clamp(1.25rem,6vw,6rem)]">
-            <Image
-              src="/images/plant-blue.svg"
-              alt=""
-              width={120}
-              height={120}
-              aria-hidden="true"
-              className="h-16 w-auto opacity-90 sm:h-20 lg:mr-12"
-            />
+            <BloomPlant  />
           </div>
         </div>
       </div>
@@ -86,7 +80,7 @@ export default function SiteFooter() {
           className="pointer-events-none absolute -right-[6%] bottom-[8%] h-[min(200px,40vw)] w-[min(200px,40vw)] rounded-full bg-accent-blue/10 blur-[65px]"
         />
 
-        <div className="relative mx-auto max-w-6xl px-[clamp(1.25rem,6vw,6rem)] py-12 lg:py-14">
+        <div className="relative mx-auto max-w-6xl px-6 py-12 lg:py-14">
           <div className="grid gap-10 lg:grid-cols-[2fr_1fr] lg:gap-12">
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-8">
               <div data-footer-col>
@@ -100,7 +94,7 @@ export default function SiteFooter() {
 
               <div className="grid gap-8 sm:grid-cols-2">
                 <nav data-footer-col aria-label="Footer navigation">
-                  <h2 className="mb-4 text-base font-bold text-[#f5f2ec]">Links</h2>
+                  <h2 className="mb-4 text-base font-bold text-accent-orange-soft">Links</h2>
                   <ul className="space-y-2 text-sm">
                     {footerNavLinks.map(({ label, href }) => (
                       <li key={label}>
@@ -116,7 +110,7 @@ export default function SiteFooter() {
                 </nav>
 
                 <div data-footer-col>
-                  <h2 className="mb-4 text-base font-bold text-[#f5f2ec]">Skills</h2>
+                  <h2 className="mb-4 text-base font-bold text-accent-orange-soft">Skills</h2>
                   <ul className="space-y-2 text-sm text-white/70">
                     {footerSkillHighlights.map((skill) => (
                       <li key={skill} className="font-medium">
@@ -129,7 +123,7 @@ export default function SiteFooter() {
             </div>
 
             <div data-footer-col>
-              <h2 className="mb-4 text-base font-bold text-[#f5f2ec]">Newsletter</h2>
+              <h2 className="mb-4 text-base font-bold text-accent-orange-soft">Newsletter</h2>
               <p className="mb-6 text-sm leading-relaxed text-white/70">
                 Subscribe to my weekly newsletter to get updates about tech.
               </p>
@@ -139,7 +133,7 @@ export default function SiteFooter() {
                   id="footer-newsletter-email"
                   type="email"
                   placeholder="you@email.com"
-                  className="min-w-0 flex-1 rounded-l-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-white/40"
+                  className="min-w-0 flex-1 rounded-l-lg border border-accent-orange-soft/40 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-white/40"
                 />
                 <button
                   type="button"

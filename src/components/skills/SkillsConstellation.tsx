@@ -48,7 +48,7 @@ export default function SkillsConstellation() {
           </div>
         }
         showOrbits
-        orbitClassName="border-white/10"
+        orbitClassName="border-accent-orange-soft/40"
         className="mx-auto"
       />
     </div>

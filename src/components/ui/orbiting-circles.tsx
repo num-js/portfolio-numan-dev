@@ -6,6 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
 
 interface OrbitItem {
   id?: string;
@@ -86,9 +87,13 @@ export default function OrbitingCircles({
           >
             {showOrbits && (
               <div
-                className={`absolute inset-0 rounded-full border transition-colors duration-300 ${
-                  isThisRingPaused ? 'border-neutral-600' : 'border-neutral-800/50'
-                } ${orbitClassName}`}
+                className={cn(
+                  'absolute inset-0 rounded-full border transition-colors duration-300',
+                  isThisRingPaused
+                    ? 'border-accent-orange-soft/70'
+                    : 'border-accent-orange-soft/40',
+                  orbitClassName
+                )}
               />
             )}
 

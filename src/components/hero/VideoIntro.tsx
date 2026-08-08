@@ -237,21 +237,31 @@ export default function VideoIntro() {
           {heroContent.tagline}
         </p>
         <h1
-          className="mb-[clamp(1rem,2.4vw,1.5rem)] flex flex-col text-[clamp(2.2rem,7.5vw,6rem)] font-extrabold leading-[0.92] tracking-[-0.02em] text-[#f5f2ec] [text-shadow:0_12px_60px_rgba(0,0,0,0.45)]"
+          className="mb-[clamp(1rem,2.4vw,1.5rem)] flex flex-col text-[clamp(2.2rem,7.5vw,6rem)] font-extrabold leading-[0.92] tracking-[-0.02em] text-[#f5f2ec]"
           aria-label={`${heroContent.firstName} ${heroContent.lastName}`.trim()}
         >
-          <span
-            data-hero-name-line
-            className="block animate-sheen bg-[linear-gradient(100deg,#ffffff_0%,#ffe9d6_45%,#ffb37a_75%,#ffffff_100%)] bg-clip-text text-transparent [background-size:220%_100%] motion-reduce:animate-none motion-reduce:bg-none motion-reduce:text-[#f5f2ec]"
-          >
-            {heroContent.firstName}
+          <span data-hero-name-line className="relative block">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 select-none text-[#ffb37a] [text-shadow:0_4px_12px_rgba(0,0,0,1),0_10px_28px_rgba(0,0,0,0.95),0_18px_60px_rgba(0,0,0,0.8),0_0_36px_rgba(255,122,60,0.75),0_0_72px_rgba(255,179,122,0.55)]"
+            >
+              {heroContent.firstName}
+            </span>
+            <span className="relative block animate-sheen bg-[linear-gradient(100deg,#ffffff_0%,#ffe9d6_45%,#ffb37a_75%,#ffffff_100%)] bg-clip-text text-transparent [background-size:220%_100%] motion-reduce:animate-none motion-reduce:bg-none motion-reduce:text-[#f5f2ec]">
+              {heroContent.firstName}
+            </span>
           </span>
           {hasLastName && (
-            <span
-              data-hero-name-line
-              className="block animate-sheen bg-[linear-gradient(100deg,#ffffff_0%,#ffe9d6_45%,#ffb37a_75%,#ffffff_100%)] bg-clip-text text-transparent [background-size:220%_100%] motion-reduce:animate-none motion-reduce:bg-none motion-reduce:text-[#f5f2ec]"
-            >
-              {heroContent.lastName}
+            <span data-hero-name-line className="relative block">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 select-none text-[#ffb37a] [text-shadow:0_4px_12px_rgba(0,0,0,1),0_10px_28px_rgba(0,0,0,0.95),0_18px_60px_rgba(0,0,0,0.8),0_0_36px_rgba(255,122,60,0.75),0_0_72px_rgba(255,179,122,0.55)]"
+              >
+                {heroContent.lastName}
+              </span>
+              <span className="relative block animate-sheen bg-[linear-gradient(100deg,#ffffff_0%,#ffe9d6_45%,#ffb37a_75%,#ffffff_100%)] bg-clip-text text-transparent [background-size:220%_100%] motion-reduce:animate-none motion-reduce:bg-none motion-reduce:text-[#f5f2ec]">
+                {heroContent.lastName}
+              </span>
             </span>
           )}
         </h1>
