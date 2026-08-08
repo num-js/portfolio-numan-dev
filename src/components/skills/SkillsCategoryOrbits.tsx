@@ -35,14 +35,20 @@ export default function SkillsCategoryOrbits() {
               },
             ]}
             centerContent={
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-glass-border bg-glass text-center shadow-[0_0_40px_-8px_rgba(255,122,60,0.4)] backdrop-blur-xl lg:h-20 lg:w-20">
-                <span className="px-1 text-[0.6rem] font-semibold uppercase leading-tight tracking-wide text-accent-orange-soft lg:text-[0.68rem]">
-                  {category.label}
-                </span>
+              <div className="relative flex h-16 w-16 items-center justify-center lg:h-20 lg:w-20">
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-[-24%] rounded-full bg-[radial-gradient(circle,rgba(255,122,60,0.4)_0%,transparent_70%)] blur-md"
+                />
+                <div className="relative flex h-full w-full items-center justify-center rounded-full border border-accent-orange/30 bg-[radial-gradient(circle_at_35%_30%,rgba(255,179,122,0.3)_0%,rgba(11,13,19,0.92)_55%)] text-center shadow-[0_0_40px_-6px_rgba(255,122,60,0.5)] backdrop-blur-xl">
+                  <span className="px-1 text-[0.6rem] font-semibold uppercase leading-tight tracking-wide text-accent-orange-soft lg:text-[0.68rem]">
+                    {category.label}
+                  </span>
+                </div>
               </div>
             }
             showOrbits
-            orbitClassName="border-accent-orange-soft/40"
+            orbitClassName="border-accent-orange-soft/25 border-dashed"
             className="mx-auto scale-[0.92] lg:scale-100"
           />
         </div>

@@ -41,14 +41,20 @@ export default function SkillsConstellation() {
       <OrbitingCircles
         rings={rings}
         centerContent={
-          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-glass-border bg-glass text-center shadow-[0_0_40px_-8px_rgba(255,122,60,0.4)] backdrop-blur-xl">
-            <span className="px-1 text-[0.68rem] font-semibold uppercase leading-tight tracking-wide text-accent-orange-soft">
-              Skills
-            </span>
+          <div className="relative flex h-20 w-20 items-center justify-center">
+            <span
+              aria-hidden="true"
+              className="absolute inset-[-28%] rounded-full bg-[radial-gradient(circle,rgba(255,122,60,0.45)_0%,transparent_70%)] blur-md"
+            />
+            <div className="relative flex h-full w-full items-center justify-center rounded-full border border-accent-orange/35 bg-[radial-gradient(circle_at_35%_30%,rgba(255,179,122,0.35)_0%,rgba(11,13,19,0.92)_55%)] text-center shadow-[0_0_50px_-6px_rgba(255,122,60,0.55)] backdrop-blur-xl">
+              <span className="px-1 text-[0.68rem] font-semibold uppercase leading-tight tracking-wide text-accent-orange-soft">
+                Skills
+              </span>
+            </div>
           </div>
         }
         showOrbits
-        orbitClassName="border-accent-orange-soft/40"
+        orbitClassName="border-accent-orange-soft/25 border-dashed"
         className="mx-auto"
       />
     </div>
