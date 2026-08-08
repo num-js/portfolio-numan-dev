@@ -94,7 +94,7 @@ export default function SiteFooter() {
 
               <div className="grid gap-8 sm:grid-cols-2">
                 <nav data-footer-col aria-label="Footer navigation">
-                  <h2 className="mb-4 text-base font-bold text-[#f5f2ec]">Links</h2>
+                  <h2 className="mb-4 text-base font-bold text-accent-orange-soft">Links</h2>
                   <ul className="space-y-2 text-sm">
                     {footerNavLinks.map(({ label, href }) => (
                       <li key={label}>
@@ -110,7 +110,7 @@ export default function SiteFooter() {
                 </nav>
 
                 <div data-footer-col>
-                  <h2 className="mb-4 text-base font-bold text-[#f5f2ec]">Skills</h2>
+                  <h2 className="mb-4 text-base font-bold text-accent-orange-soft">Skills</h2>
                   <ul className="space-y-2 text-sm text-white/70">
                     {footerSkillHighlights.map((skill) => (
                       <li key={skill} className="font-medium">
@@ -123,7 +123,7 @@ export default function SiteFooter() {
             </div>
 
             <div data-footer-col>
-              <h2 className="mb-4 text-base font-bold text-[#f5f2ec]">Newsletter</h2>
+              <h2 className="mb-4 text-base font-bold text-accent-orange-soft">Newsletter</h2>
               <p className="mb-6 text-sm leading-relaxed text-white/70">
                 Subscribe to my weekly newsletter to get updates about tech.
               </p>
