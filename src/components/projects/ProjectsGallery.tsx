@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SiGithub } from "react-icons/si";
 import { projectsContent } from "@/lib/projectsContent";
+import Pill from "@/components/shared/Pill";
 import HrLine from "../ui/HrLine";
 
 if (typeof window !== "undefined") {
@@ -169,11 +170,8 @@ export default function ProjectsGallery() {
 
               <ul data-reveal className="mb-5 flex flex-wrap gap-1.5">
                 {project.tech.map((tech) => (
-                  <li
-                    key={tech}
-                    className="rounded-full border border-accent-orange-soft/35 bg-white/5 px-2.5 py-1 text-[0.65rem] text-white/65"
-                  >
-                    {tech}
+                  <li key={tech}>
+                    <Pill>{tech}</Pill>
                   </li>
                 ))}
               </ul>

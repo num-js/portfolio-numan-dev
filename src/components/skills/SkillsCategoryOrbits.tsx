@@ -42,7 +42,7 @@ export default function SkillsCategoryOrbits() {
               </div>
             }
             showOrbits
-            orbitClassName="border-white/10"
+            orbitClassName="border-accent-orange-soft/40"
             className="mx-auto scale-[0.92] lg:scale-100"
           />
         </div>

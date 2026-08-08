@@ -155,7 +155,7 @@ export default function AcademicsTimeline() {
 
             <div
               data-academic-card
-              className="rounded-2xl border border-glass-border bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-xl sm:p-6"
+              className="rounded-2xl border border-accent-orange-soft/40 bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-xl sm:p-6"
             >
               <p className="mb-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-accent-orange-soft">
                 {entry.course}
@@ -191,7 +191,7 @@ export default function AcademicsTimeline() {
               {entry.marks.semMarks && (
                 <div className="mt-6 overflow-x-auto pb-2">
                   <div className="inline-block min-w-[260px] sm:-rotate-2 sm:origin-top-left">
-                    <table className="w-full overflow-hidden rounded-xl border border-white/10 shadow-[0_18px_50px_-24px_rgba(0,0,0,0.75)]">
+                    <table className="w-full overflow-hidden rounded-xl border border-accent-orange-soft/40 shadow-[0_18px_50px_-24px_rgba(0,0,0,0.75)]">
                       <thead>
                         <tr>
                           {entry.marks.semMarks.headers.map((header, index) => (
