@@ -91,7 +91,7 @@ export default function HeroDock() {
         position="bottom"
         labelMode="responsive"
         magnification={1.45}
-        className="pointer-events-auto"
+        className="pointer-events-auto border-accent-orange-soft/40"
       />
     </div>
   );

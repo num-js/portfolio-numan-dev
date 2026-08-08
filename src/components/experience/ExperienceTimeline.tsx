@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import experienceData from "../../lib/experienceData.json";
 import HrLine from "../ui/HrLine";
+import Pill from "@/components/shared/Pill";
 import Image from "next/image";
 import { getDuration, getMonthNameYear } from "@/utils/getDate";
 
@@ -131,7 +132,7 @@ export default function ExperienceTimeline() {
 
               <div
                 className={
-                  "rounded-2xl border border-glass-border bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-xl lg:w-[calc(50%-2.75rem)] lg:p-6 " +
+                  "rounded-2xl border border-accent-orange-soft/40 bg-glass p-5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-xl lg:w-[calc(50%-2.75rem)] lg:p-6 " +
                   (isRight ? "lg:ml-[calc(50%+2.75rem)]" : "")
                 }
               >
@@ -175,11 +176,8 @@ export default function ExperienceTimeline() {
 
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {entry.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[0.7rem] text-white/65"
-                    >
-                      {skill}
+                    <li key={skill}>
+                      <Pill>{skill}</Pill>
                     </li>
                   ))}
                 </ul>

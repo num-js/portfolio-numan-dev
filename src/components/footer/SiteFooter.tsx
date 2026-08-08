@@ -139,7 +139,7 @@ export default function SiteFooter() {
                   id="footer-newsletter-email"
                   type="email"
                   placeholder="you@email.com"
-                  className="min-w-0 flex-1 rounded-l-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-white/40"
+                  className="min-w-0 flex-1 rounded-l-lg border border-accent-orange-soft/40 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-white/40"
                 />
                 <button
                   type="button"

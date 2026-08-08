@@ -18,7 +18,7 @@ export default function AcademicsSection() {
       <div className="relative">
         <div
           // ref={bubbleRef}
-          className="absolute z-10 mx-auto max-w-[280px] -rotate-2 rounded-2xl border border-glass-border bg-glass px-4 py-3 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:max-w-[300px] lg:absolute right-[30%] lg:right-[20%] top-[-100px] lg:top-[-30px] lg:max-w-[260px]"
+          className="absolute z-10 mx-auto max-w-[280px] -rotate-2 rounded-2xl border border-accent-orange-soft/40 bg-glass px-4 py-3 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:max-w-[300px] lg:absolute right-[30%] lg:right-[20%] top-[-100px] lg:top-[-30px] lg:max-w-[260px]"
         >
           <Image
             src="/images/num-heart.gif"

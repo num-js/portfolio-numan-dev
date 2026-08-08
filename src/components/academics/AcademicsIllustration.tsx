@@ -82,33 +82,6 @@ export default function AcademicsIllustration() {
 
   return (
     <div ref={sceneRef} className="relative mx-auto w-full max-w-[420px] lg:max-w-none">
-      {/* <div
-        ref={bubbleRef}
-        className="relative z-10 mx-auto mb-6 max-w-[280px] -rotate-2 rounded-2xl border border-glass-border bg-glass px-4 py-3 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.7)] backdrop-blur-xl sm:max-w-[300px] lg:absolute lg:left-[8%] lg:top-[-20%] lg:mb-0 lg:max-w-[260px]"
-      >
-        <Image
-          src="/images/num-heart.gif"
-          alt=""
-          width={28}
-          height={28}
-          unoptimized
-          aria-hidden="true"
-          className="absolute -right-1 -top-2.5 h-7 w-7"
-        />
-        <p className="text-[0.9rem] leading-relaxed text-white/90">
-          Degree can&apos;t fix bugs.
-          <br />
-          My{" "}
-          <Link
-            href="#skills"
-            className="font-bold text-accent-orange-soft underline decoration-accent-orange-soft/40 underline-offset-2 transition-colors duration-300 hover:text-accent-orange hover:decoration-accent-orange-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-orange-soft"
-          >
-            Skills
-          </Link>{" "}
-          can. 😎
-        </p>
-      </div> */}
-
       <div ref={floatRef} className="relative mx-auto w-[min(100%,360px)] lg:w-full">
         <div ref={floatInnerRef} className="relative">
           <div
