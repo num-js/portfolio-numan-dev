@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FooterBrand from "./FooterBrand";
+import FooterCirclesBackdrop from "./FooterCirclesBackdrop";
 import SocialLinks from "@/components/shared/SocialLinks";
 import ResumeDownloadLink from "@/components/shared/ResumeDownloadLink";
 import {
@@ -71,14 +72,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="relative overflow-hidden border-t border-white/6 bg-glass/90 backdrop-blur-xl">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-[8%] top-[10%] h-[min(220px,45vw)] w-[min(220px,45vw)] rounded-full bg-accent-orange/8 blur-[70px]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-[6%] bottom-[8%] h-[min(200px,40vw)] w-[min(200px,40vw)] rounded-full bg-accent-blue/10 blur-[65px]"
-        />
+        <FooterCirclesBackdrop />
 
         <div className="relative mx-auto max-w-6xl px-6 py-12 lg:py-14">
           <div className="grid gap-10 lg:grid-cols-[2fr_1fr] lg:gap-12">
