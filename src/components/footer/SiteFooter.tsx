@@ -12,7 +12,7 @@ import {
   footerNavLinks,
   footerSkillHighlights,
 } from "@/lib/footerContent";
-import { BloomPlant } from "../plants";
+import { BloomPlant } from "@/components/ui-num/plants";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
