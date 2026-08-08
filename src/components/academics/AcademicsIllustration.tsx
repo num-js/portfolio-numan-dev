@@ -86,7 +86,7 @@ export default function AcademicsIllustration() {
         <div ref={floatInnerRef} className="relative">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-6 top-[18%] h-24 w-24 rounded-full bg-accent-blue/10 blur-3xl"
+            className="pointer-events-none absolute -right-6 top-[18%] h-24 w-24 rounded-full bg-accent-orange/10 blur-3xl"
           />
           <div
             aria-hidden="true"
