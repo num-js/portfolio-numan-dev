@@ -5,6 +5,7 @@ import SkillsShowcase from "@/components/skills/SkillsShowcase";
 import AcademicsSection from "@/components/academics/AcademicsSection";
 import SectionHeader from "@/components/shared/SectionHeader";
 import HeroDock from "@/components/hero/HeroDock";
+import SkillsSolarBackdrop from "@/components/skills/SkillsSolarBackdrop";
 
 export default function Home() {
   return (
@@ -30,9 +31,11 @@ export default function Home() {
 
       <section
         id="skills"
-        className="relative z-[1] border-t border-white/6 bg-ink px-6 pt-8 pb-16 sm:px-10 lg:px-24 lg:pt-10 lg:pb-28"
+        className="relative z-[1] overflow-hidden border-t border-white/6 bg-ink px-6 pt-8 pb-16 sm:px-10 lg:px-24 lg:pt-10 lg:pb-28"
       >
-        <div className="mx-auto mb-16 max-w-[760px] text-center lg:mb-20">
+        <SkillsSolarBackdrop />
+
+        <div className="relative mx-auto mb-4 max-w-[760px] text-center lg:mb-8">
           <div className="mb-5">
             <SectionHeader sectionTitle="Skills" />
           </div>
@@ -42,7 +45,9 @@ export default function Home() {
           </p>
         </div>
 
-        <SkillsShowcase />
+        <div className="relative">
+          <SkillsShowcase />
+        </div>
       </section>
 
       <section
