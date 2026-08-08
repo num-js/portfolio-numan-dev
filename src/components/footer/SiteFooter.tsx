@@ -12,6 +12,7 @@ import {
   footerNavLinks,
   footerSkillHighlights,
 } from "@/lib/footerContent";
+import { BloomPlant } from "../plants";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -64,14 +65,7 @@ export default function SiteFooter() {
       <div className="relative">
         <div className="absolute right-0 top-[-64px]">
           <div className="flex justify-end px-[clamp(1.25rem,6vw,6rem)]">
-            <Image
-              src="/images/plant.svg"
-              alt=""
-              width={120}
-              height={120}
-              aria-hidden="true"
-              className="h-16 w-auto opacity-90 sm:h-20 lg:mr-12"
-            />
+            <BloomPlant  />
           </div>
         </div>
       </div>
